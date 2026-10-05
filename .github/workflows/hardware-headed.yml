@@ -72,7 +72,8 @@ jobs:
         run: |
           test -S "$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY"
           test -z "${DISPLAY:-}"
-          loginctl show-session 2 -p Active -p Type
+          bash scripts/test-active-wayland-session.sh
+          bash scripts/assert-active-wayland-session.sh
 
       - name: Run deterministic CEF to DMA-BUF to wgpu gate
         run: |

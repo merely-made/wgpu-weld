@@ -6,6 +6,8 @@ This is the canonical index for active documentation in this repository.
 
 - Keep CEF and platform facts separate from hardware receipts. State the
   platform, path, and measurement before calling a capability verified.
+- Headed Linux preflights verify current runner-owned active Wayland sessions;
+  never retain a logind session number as a durable hardware identity.
 - Preserve identity across asynchronous producer boundaries. A bounded queue
   may reject admission, but it must not silently discard an accepted result.
 - Keep browser policy in the host. Welding owns CEF adaptation and
@@ -22,7 +24,8 @@ This is the canonical index for active documentation in this repository.
 - [CEF accelerated OSR plan](2026-05-14_cef_accelerated_osr_plan.md): CEF
   windowless rendering and GPU-import implementation record.
 - [Producer parity plan](2026-08-10_producer_parity_plan.md): cross-lane
-  capability matrix, implementation phases, and evidence log.
+  capability matrix and evidence, including current green parity and the local
+  RADV session-preflight repair awaiting native acceptance.
 
 ## Maintainer-owned description
 

@@ -1,7 +1,16 @@
 # Producer Parity Plan: welding / scrying / grafting
 
 **Date:** 2026-08-10
-**Status:** W1-W9 landed. The 2026-08-30 snapshot-provenance follow-up is
+**Status (2026-10-05):** W1-W9 landed. Exact-HEAD parity run `37205146754`
+is green on all four hosts, including NVIDIA. Hardware run `37197779933`
+passes on both Macs and NVIDIA but fails RADV before the product test at a
+stale logind session-ID assertion. The bounded session-discovery repair is
+implemented locally; shell syntax and eight command-mocked cases pass, with a native
+rerun still open.
+Published versions and registry-only proof remain owned by the canonical
+triplet release plan below.
+
+**Historical checkpoint (2026-09-04):** The 2026-08-30 snapshot-provenance follow-up is
 landed with focused local test and Windows consumer-check receipts. The
 wgpu 30.0.1 release row has a green three-platform CI matrix and a current
 headed Linux/Vulkan import receipt; the saved Metal hosts were unreachable
@@ -1318,3 +1327,22 @@ pattern from demo-weld-mac generalizes). G1 whenever, it gates nothing local.
   `[0,0,0,0]` before, `WELD_BACKGROUND=transparent` keeps the old behaviour
   on request, `WELD_BACKGROUND=ff0000` probes BGRA red. All three demos
   share the `WELD_BACKGROUND` knob.
+
+- 2026-10-05: **Linux headed preflight repair implemented.** Exact-HEAD parity run
+  [37205146754](https://github.com/merely-made/wgpu-weld/actions/runs/37205146754)
+  passed all four jobs; NVIDIA completed October 5. Hardware run
+  [37197779933](https://github.com/merely-made/wgpu-weld/actions/runs/37197779933)
+  passed Intel/M4/NVIDIA pixel jobs but failed RADV at
+  `loginctl show-session 2` with `No session '2' known`, before the CEF pixel
+  test. The workflow runs `scripts/test-active-wayland-session.sh` immediately
+  before `scripts/assert-active-wayland-session.sh`,
+  matching current runner UID, active state, and Wayland type after enumerating
+  that user's sessions. Existing socket/no-X11 checks remain. Query failures
+  and missing properties fail closed; the helper does not alter login state.
+  `scripts/test-active-wayland-session.sh` provides rotated-ID admission and
+  inactive/X11/other-user/no-session/query-failure/missing-property refusals.
+  The coordinating lane ran Git Bash `bash -n` on both scripts and the mocked
+  test; all eight cases passed in Weld and Scry. Native done-condition:
+  a fresh preflight and CEF pixel receipt pass on RADV. No workflow was
+  dispatched for this edit; native acceptance and
+  published-package proof remain separate.
