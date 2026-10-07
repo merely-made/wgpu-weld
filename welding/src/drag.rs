@@ -98,7 +98,7 @@ pub(crate) fn send_drag(
             })?;
             let mut data = to_cef_payload(&payload)?;
             host.drag_target_drag_enter(Some(&mut data), Some(&mouse), allowed);
-        }
+        },
         DragEventKind::Over => host.drag_target_drag_over(Some(&mouse), allowed),
         DragEventKind::Leave => host.drag_target_drag_leave(),
         DragEventKind::Drop => host.drag_target_drop(Some(&mouse)),

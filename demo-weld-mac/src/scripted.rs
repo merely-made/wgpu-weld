@@ -198,7 +198,7 @@ impl ScriptedInput {
             10 => self.show(producer),
             11 => self.devtools(producer),
             12 => self.right_click(producer),
-            _ => {}
+            _ => {},
         }
         self.stage += 1;
     }
@@ -357,17 +357,17 @@ impl ScriptedInput {
             }
         }
         match mode.as_str() {
-            "compose" => {}
+            "compose" => {},
             "finish" => {
                 if let Err(e) = producer.ime_finish_composing(false) {
                     eprintln!("weld demo: ime_finish_composing failed: {e}");
                 }
-            }
+            },
             _ => {
                 if let Err(e) = producer.ime_commit_text(text) {
                     eprintln!("weld demo: ime_commit_text failed: {e}");
                 }
-            }
+            },
         }
     }
 

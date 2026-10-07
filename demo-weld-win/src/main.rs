@@ -258,7 +258,7 @@ impl ApplicationHandler for DemoApp {
                         s.window.request_redraw();
                     }
                 }
-            }
+            },
 
             WindowEvent::ScaleFactorChanged { scale_factor, .. } => {
                 // The window crossed onto a display with a different density.
@@ -271,7 +271,7 @@ impl ApplicationHandler for DemoApp {
                 } else if let Err(err) = s.producer.set_scale_factor(scale_factor as f32) {
                     log_scale_err(err);
                 }
-            }
+            },
 
             WindowEvent::Resized(size) => {
                 s.surface_config.width = size.width.max(1);
@@ -280,19 +280,19 @@ impl ApplicationHandler for DemoApp {
                 if let Err(err) = s.producer.resize(size) {
                     eprintln!("weld demo: resize failed: {err}");
                 }
-            }
+            },
 
             WindowEvent::Focused(true) => {
                 s.focus_pending = true;
                 s.focus_attempted = false;
-            }
+            },
 
             WindowEvent::ModifiersChanged(m) => {
                 s.mods.shift = m.state().shift_key();
                 s.mods.ctrl = m.state().control_key();
                 s.mods.alt = m.state().alt_key();
                 s.mods.meta = m.state().super_key();
-            }
+            },
 
             WindowEvent::KeyboardInput { event: ke, .. } => {
                 if s.frames_imported == 0 {
@@ -336,7 +336,7 @@ impl ApplicationHandler for DemoApp {
                         eprintln!("weld demo: send KeyUp failed: {err}");
                     }
                 }
-            }
+            },
 
             WindowEvent::CursorMoved { position, .. } => {
                 s.cursor = (position.x as f32, position.y as f32);
@@ -352,7 +352,7 @@ impl ApplicationHandler for DemoApp {
                 }) {
                     eprintln!("weld demo: mouse move failed: {err}");
                 }
-            }
+            },
 
             WindowEvent::MouseInput { state, button, .. } => {
                 let mb = match button {
@@ -370,10 +370,10 @@ impl ApplicationHandler for DemoApp {
                     MouseButton::Left => s.mods.left_mouse_button = state == ElementState::Pressed,
                     MouseButton::Middle => {
                         s.mods.middle_mouse_button = state == ElementState::Pressed
-                    }
+                    },
                     MouseButton::Right => {
                         s.mods.right_mouse_button = state == ElementState::Pressed
-                    }
+                    },
                 }
                 if s.frames_imported == 0 {
                     return;
@@ -387,7 +387,7 @@ impl ApplicationHandler for DemoApp {
                 }) {
                     eprintln!("weld demo: mouse button failed: {err}");
                 }
-            }
+            },
 
             WindowEvent::MouseWheel { delta, .. } => {
                 if s.frames_imported == 0 {
@@ -409,7 +409,7 @@ impl ApplicationHandler for DemoApp {
                 }) {
                     eprintln!("weld demo: mouse wheel failed: {err}");
                 }
-            }
+            },
 
             WindowEvent::RedrawRequested => {
                 match s.producer.acquire_frame(&s.host_ctx) {
@@ -423,11 +423,11 @@ impl ApplicationHandler for DemoApp {
                             new_frame.format
                         );
                         s.frame = Some(new_frame);
-                    }
-                    Ok(None) => {}
+                    },
+                    Ok(None) => {},
                     Err(err) => {
                         eprintln!("weld demo: acquire_frame failed: {err}");
-                    }
+                    },
                 }
 
                 if s.focus_pending && !s.focus_attempted && s.frames_imported > 0 {
@@ -448,8 +448,8 @@ impl ApplicationHandler for DemoApp {
                             popup.rect.width, popup.rect.height, popup.rect.x, popup.rect.y
                         );
                         s.popup = Some(popup);
-                    }
-                    Ok(None) => {}
+                    },
+                    Ok(None) => {},
                     Err(err) => eprintln!("weld demo: acquire_popup failed: {err}"),
                 }
                 if s.producer.popup_rect().is_none() && s.popup.take().is_some() {
@@ -516,12 +516,12 @@ impl ApplicationHandler for DemoApp {
                                             bytes.len(),
                                             path.display()
                                         );
-                                    }
+                                    },
                                     Ok(()) => eprintln!("weld demo: snapshot was not a PNG"),
                                     Err(e) => eprintln!("weld demo: could not write snapshot: {e}"),
                                 }
                             }
-                        }
+                        },
                         Err(e) => eprintln!("weld demo: snapshot #{snapshot_id} failed: {e}"),
                     }
                 }
@@ -534,10 +534,10 @@ impl ApplicationHandler for DemoApp {
                             scripted::answer_auth_if_challenged(&mut s.producer, &event);
                             scripted::answer_permission_if_asked(&mut s.producer, &event);
                             scripted::finish_page_drag_if_started(&mut s.producer, &event);
-                        }
+                        },
                         CefSurfaceEvent::WebMessage(message) => {
                             eprintln!("weld demo: web message: {message}");
-                        }
+                        },
                         CefSurfaceEvent::ScriptCompleted { id, result } => match result {
                             Ok(json) => eprintln!("weld demo: SCRIPT #{id} => {json}"),
                             Err(err) => eprintln!("weld demo: SCRIPT #{id} threw: {err}"),
@@ -551,10 +551,10 @@ impl ApplicationHandler for DemoApp {
                                         c.name, c.value, c.domain, c.path, c.secure, c.http_only
                                     );
                                 }
-                            }
+                            },
                             Err(err) => eprintln!("weld demo: COOKIES #{id} failed: {err}"),
                         },
-                        _ => {}
+                        _ => {},
                     }
                 }
 
@@ -624,16 +624,16 @@ impl ApplicationHandler for DemoApp {
                         s.surface.configure(&s.host_ctx.device, &s.surface_config);
                         s.window.request_redraw();
                         return;
-                    }
+                    },
                     wgpu::CurrentSurfaceTexture::Timeout
                     | wgpu::CurrentSurfaceTexture::Occluded => {
                         s.window.request_redraw();
                         return;
-                    }
+                    },
                     wgpu::CurrentSurfaceTexture::Validation => {
                         eprintln!("weld demo: surface validation error");
                         return;
-                    }
+                    },
                 };
 
                 let target = output
@@ -755,9 +755,9 @@ impl ApplicationHandler for DemoApp {
                 } else {
                     s.window.request_redraw();
                 }
-            }
+            },
 
-            _ => {}
+            _ => {},
         }
     }
 
@@ -823,15 +823,15 @@ pub(crate) unsafe fn run_bootstrap(instance: *mut std::ffi::c_void, sandbox_info
             Err(error) => {
                 eprintln!("weld demo: invalid CEF bootstrap sandbox context: {error}");
                 return 111;
-            }
+            },
         };
     match context.execute_process(&cef_path) {
         Ok(Some(code)) => return code,
-        Ok(None) => {}
+        Ok(None) => {},
         Err(error) => {
             eprintln!("weld demo: sandboxed CEF subprocess probe failed: {error}");
             return 112;
-        }
+        },
     }
 
     let runtime_config = runtime_config(&cef_path.to_string_lossy(), CefSandboxMode::Sandboxed);
@@ -840,7 +840,7 @@ pub(crate) unsafe fn run_bootstrap(instance: *mut std::ffi::c_void, sandbox_info
         Err(error) => {
             eprintln!("weld demo: sandboxed CEF initialize failed: {error}");
             return 113;
-        }
+        },
     };
     run_browser(runtime)
 }
@@ -922,11 +922,11 @@ fn report(state: &DemoState) -> bool {
                 );
                 false
             }
-        }
+        },
         Err(error) => {
             eprintln!("PIXEL FIXTURE FAIL: readback failed: {error}");
             false
-        }
+        },
     }
 }
 
@@ -946,10 +946,10 @@ fn pixel_fixture_expected(format: wgpu::TextureFormat) -> Option<[u8; 4]> {
     match format {
         wgpu::TextureFormat::Bgra8Unorm | wgpu::TextureFormat::Bgra8UnormSrgb => {
             Some([255, 144, 30, 255])
-        }
+        },
         wgpu::TextureFormat::Rgba8Unorm | wgpu::TextureFormat::Rgba8UnormSrgb => {
             Some([30, 144, 255, 255])
-        }
+        },
         _ => None,
     }
 }

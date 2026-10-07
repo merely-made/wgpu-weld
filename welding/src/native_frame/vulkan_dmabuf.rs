@@ -250,7 +250,7 @@ fn deduplicated_raw_planes(
                         raw_custody.disarm(raw_fd);
                         unsafe { libc::close(raw_fd) };
                         index
-                    }
+                    },
                     None => {
                         raw_custody.disarm(raw_fd);
                         let owned = unsafe { OwnedFd::from_raw_fd(raw_fd) };
@@ -259,9 +259,9 @@ fn deduplicated_raw_planes(
                         buffer_identities.push(identity);
                         raw_fd_indices.push((raw_fd, index));
                         index
-                    }
+                    },
                 }
-            }
+            },
         };
 
         planes.push(DmaBufPlane::new(buffer_index, offset, size, stride));

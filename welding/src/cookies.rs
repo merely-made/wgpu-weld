@@ -63,7 +63,7 @@ impl CookieJar {
                 Some(active) => {
                     *state = Some(active);
                     None
-                }
+                },
                 None => None,
             }
         };
@@ -363,7 +363,7 @@ pub(crate) fn request(
         Some(url) => {
             let url: cef::CefString = url.into();
             manager.visit_url_cookies(Some(&url), 1, Some(&mut visitor))
-        }
+        },
         None => manager.visit_all_cookies(Some(&mut visitor)),
     };
     if accepted == 0 {

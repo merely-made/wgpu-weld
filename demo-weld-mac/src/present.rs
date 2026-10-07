@@ -19,15 +19,15 @@ pub(crate) fn render(s: &mut DemoState) {
             s.surface.configure(&s.host_ctx.device, &s.surface_config);
             s.window.request_redraw();
             return;
-        }
+        },
         wgpu::CurrentSurfaceTexture::Timeout | wgpu::CurrentSurfaceTexture::Occluded => {
             s.window.request_redraw();
             return;
-        }
+        },
         wgpu::CurrentSurfaceTexture::Validation => {
             log::error!("surface validation error");
             return;
-        }
+        },
     };
 
     let target = output
@@ -158,7 +158,7 @@ pub(crate) fn report(s: &mut DemoState) -> bool {
                     ));
                     false
                 }
-            }
+            },
             Ok(rb) => {
                 log::info!(
                     "probe: {}/{} bytes non-zero in center {:?}; first pixels {:?}",
@@ -181,11 +181,11 @@ pub(crate) fn report(s: &mut DemoState) -> bool {
                     );
                     false
                 }
-            }
+            },
             Err(e) => {
                 log::error!("VALIDATION FAIL: readback failed: {e}");
                 false
-            }
+            },
         },
         None => {
             log::error!("VALIDATION FAIL: no frame was ever imported");
@@ -193,7 +193,7 @@ pub(crate) fn report(s: &mut DemoState) -> bool {
                 receipt(format_args!("pixel-fixture: FAIL no imported frame"));
             }
             false
-        }
+        },
     };
 
     // Popup verdict, only when a popup was actually asked for.
@@ -223,7 +223,7 @@ pub(crate) fn report(s: &mut DemoState) -> bool {
                     ),
                     Err(e) => log::error!("POPUP FAIL: readback failed: {e}"),
                 }
-            }
+            },
             None => log::error!(
                 "POPUP FAIL: {} imported but the cached surface was dropped before the report",
                 s.popups_imported

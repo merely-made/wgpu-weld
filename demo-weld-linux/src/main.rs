@@ -363,7 +363,7 @@ impl ApplicationHandler for DemoApp {
             WindowEvent::CloseRequested => {
                 let _ = s.producer.close();
                 el.exit();
-            }
+            },
 
             WindowEvent::ScaleFactorChanged { scale_factor, .. } => {
                 // The window crossed onto a display with a different density.
@@ -376,26 +376,26 @@ impl ApplicationHandler for DemoApp {
                 } else if let Err(err) = s.producer.set_scale_factor(scale_factor as f32) {
                     log_scale_err(err);
                 }
-            }
+            },
 
             WindowEvent::Resized(size) => {
                 s.surface_config.width = size.width.max(1);
                 s.surface_config.height = size.height.max(1);
                 s.surface.configure(&s.host_ctx.device, &s.surface_config);
                 let _ = s.producer.resize(size);
-            }
+            },
 
             WindowEvent::Focused(true) => {
                 s.focus_pending = true;
                 s.focus_attempted = false;
-            }
+            },
 
             WindowEvent::ModifiersChanged(m) => {
                 s.mods.shift = m.state().shift_key();
                 s.mods.ctrl = m.state().control_key();
                 s.mods.alt = m.state().alt_key();
                 s.mods.meta = m.state().super_key();
-            }
+            },
 
             WindowEvent::KeyboardInput { event: ke, .. } => {
                 if s.frames_imported == 0 {
@@ -431,7 +431,7 @@ impl ApplicationHandler for DemoApp {
                         modifiers: s.mods,
                     });
                 }
-            }
+            },
 
             WindowEvent::CursorMoved { position, .. } => {
                 // Separates "winit never delivered it" from "CEF ignored it".
@@ -451,7 +451,7 @@ impl ApplicationHandler for DemoApp {
                     action: MouseAction::Moved,
                     modifiers: s.mods,
                 });
-            }
+            },
 
             WindowEvent::MouseInput { state, button, .. } => {
                 log::info!("winit MouseInput {state:?} {button:?} at {:?}", s.cursor);
@@ -470,10 +470,10 @@ impl ApplicationHandler for DemoApp {
                     MouseButton::Left => s.mods.left_mouse_button = state == ElementState::Pressed,
                     MouseButton::Middle => {
                         s.mods.middle_mouse_button = state == ElementState::Pressed
-                    }
+                    },
                     MouseButton::Right => {
                         s.mods.right_mouse_button = state == ElementState::Pressed
-                    }
+                    },
                 }
                 if s.frames_imported == 0 {
                     return;
@@ -488,7 +488,7 @@ impl ApplicationHandler for DemoApp {
                     Ok(()) => log::info!("send_mouse_input(click) -> Ok"),
                     Err(err) => log::error!("send_mouse_input(click) -> {err}"),
                 }
-            }
+            },
 
             WindowEvent::MouseWheel { delta, .. } => {
                 if s.frames_imported == 0 {
@@ -508,7 +508,7 @@ impl ApplicationHandler for DemoApp {
                     },
                     modifiers: s.mods,
                 });
-            }
+            },
 
             WindowEvent::RedrawRequested => {
                 s.cef_runtime.do_message_loop_work();
@@ -540,8 +540,8 @@ impl ApplicationHandler for DemoApp {
                             new_frame.format
                         );
                         s.frame = Some(new_frame);
-                    }
-                    Ok(None) => {}
+                    },
+                    Ok(None) => {},
                     Err(e) => {
                         // Rate-limited on purpose. A GPU that cannot import
                         // CEF's buffer fails on *every* paint, and an animating
@@ -551,7 +551,7 @@ impl ApplicationHandler for DemoApp {
                         if s.import_errors == 1 || s.import_errors % 500 == 0 {
                             log::error!("acquire_frame error (x{}): {e}", s.import_errors);
                         }
-                    }
+                    },
                 }
 
                 if s.focus_pending && !s.focus_attempted && s.frames_imported > 0 {
@@ -575,8 +575,8 @@ impl ApplicationHandler for DemoApp {
                             popup.rect.y
                         );
                         s.popup = Some(popup);
-                    }
-                    Ok(None) => {}
+                    },
+                    Ok(None) => {},
                     Err(e) => log::error!("acquire_popup error: {e}"),
                 }
                 if s.producer.popup_rect().is_none() && s.popup.take().is_some() {
@@ -598,10 +598,10 @@ impl ApplicationHandler for DemoApp {
                             scripted::answer_auth_if_challenged(&mut s.producer, &event);
                             scripted::answer_permission_if_asked(&mut s.producer, &event);
                             scripted::finish_page_drag_if_started(&mut s.producer, &event);
-                        }
+                        },
                         welding::CefSurfaceEvent::WebMessage(message) => {
                             log::info!("WEB MESSAGE => {message}");
-                        }
+                        },
                         welding::CefSurfaceEvent::ScriptCompleted { id, result } => match result {
                             Ok(json) => log::info!("SCRIPT #{} => {json}", id.get()),
                             Err(err) => log::error!("SCRIPT #{} threw: {err}", id.get()),
@@ -612,12 +612,12 @@ impl ApplicationHandler for DemoApp {
                                 for c in cookies.iter().take(3) {
                                     log::info!("  {}={} domain={}", c.name, c.value, c.domain);
                                 }
-                            }
+                            },
                             Err(err) => {
                                 log::error!("COOKIES #{} failed: {err}", id.get());
-                            }
+                            },
                         },
-                        _ => {}
+                        _ => {},
                     }
                 }
 
@@ -720,12 +720,12 @@ impl ApplicationHandler for DemoApp {
                                             bytes.len(),
                                             path.display()
                                         );
-                                    }
+                                    },
                                     Ok(()) => eprintln!("weld demo: snapshot was not a PNG"),
                                     Err(e) => eprintln!("weld demo: could not write snapshot: {e}"),
                                 }
                             }
-                        }
+                        },
                         Err(e) => eprintln!("weld demo: snapshot #{snapshot_id} failed: {e}"),
                     }
                 }
@@ -748,16 +748,16 @@ impl ApplicationHandler for DemoApp {
                         s.surface.configure(&s.host_ctx.device, &s.surface_config);
                         s.window.request_redraw();
                         return;
-                    }
+                    },
                     wgpu::CurrentSurfaceTexture::Timeout
                     | wgpu::CurrentSurfaceTexture::Occluded => {
                         s.window.request_redraw();
                         return;
-                    }
+                    },
                     wgpu::CurrentSurfaceTexture::Validation => {
                         log::error!("surface validation error");
                         return;
-                    }
+                    },
                 };
 
                 let target = output
@@ -867,9 +867,9 @@ impl ApplicationHandler for DemoApp {
                 // wgpu 30 moved presentation from SurfaceTexture to Queue.
                 s.host_ctx.queue.present(output);
                 s.window.request_redraw();
-            }
+            },
 
-            _ => {}
+            _ => {},
         }
     }
 }
@@ -1021,7 +1021,7 @@ fn report(s: &mut DemoState) -> bool {
                         );
                         false
                     }
-                }
+                },
                 Ok(rb) if rb.looks_painted() => {
                     log::info!(
                         "VALIDATION PASS: {} frame(s) imported, {}/{} bytes non-zero, center {:?}, first pixels {:?}",
@@ -1032,24 +1032,24 @@ fn report(s: &mut DemoState) -> bool {
                         rb.first_pixels
                     );
                     true
-                }
+                },
                 Ok(rb) => {
                     log::error!(
                         "VALIDATION FAIL: imported but entirely zero ({} bytes)",
                         rb.total_bytes
                     );
                     false
-                }
+                },
                 Err(e) => {
                     log::error!("VALIDATION FAIL: readback failed: {e}");
                     false
-                }
+                },
             }
-        }
+        },
         None => {
             log::error!("VALIDATION FAIL: no frame was ever imported");
             false
-        }
+        },
     }
 }
 
@@ -1069,10 +1069,10 @@ fn pixel_fixture_expected(format: wgpu::TextureFormat) -> Option<[u8; 4]> {
     match format {
         wgpu::TextureFormat::Bgra8Unorm | wgpu::TextureFormat::Bgra8UnormSrgb => {
             Some([255, 144, 30, 255])
-        }
+        },
         wgpu::TextureFormat::Rgba8Unorm | wgpu::TextureFormat::Rgba8UnormSrgb => {
             Some([30, 144, 255, 255])
-        }
+        },
         _ => None,
     }
 }
