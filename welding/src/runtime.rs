@@ -294,7 +294,7 @@ mod cef_backed {
                 Err(error) => {
                     eprintln!("welding: {error}");
                     1
-                }
+                },
             }
         }
 
@@ -408,7 +408,7 @@ mod cef_backed {
         match sandbox {
             CefSandboxMode::UnsandboxedTrustedContent | CefSandboxMode::Sandboxed => {
                 std::ptr::null_mut()
-            }
+            },
         }
     }
 

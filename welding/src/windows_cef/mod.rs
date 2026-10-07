@@ -382,10 +382,10 @@ impl WindowsCefProducer {
                     } else {
                         cef::PermissionRequestResult::DENY
                     });
-                }
+                },
                 crate::permissions::Pending::Media(callback, requested) => {
                     callback.cont(if granted { requested } else { 0 });
-                }
+                },
             }
             return Ok(());
         }
@@ -1223,7 +1223,7 @@ fn escape_js_string(s: &str) -> String {
             c if (c as u32) < 0x20 => {
                 use std::fmt::Write;
                 let _ = write!(out, "\\u{:04x}", c as u32);
-            }
+            },
             c => out.push(c),
         }
     }

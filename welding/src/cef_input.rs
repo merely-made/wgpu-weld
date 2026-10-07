@@ -57,16 +57,16 @@ pub fn send_mouse(host: &cef::BrowserHost, ev: &MouseEvent) {
     match ev.action {
         MouseAction::Pressed => {
             host.send_mouse_click_event(Some(&cef_ev), cef_button(ev.button), 0, 1);
-        }
+        },
         MouseAction::Released => {
             host.send_mouse_click_event(Some(&cef_ev), cef_button(ev.button), 1, 1);
-        }
+        },
         MouseAction::Moved => {
             host.send_mouse_move_event(Some(&cef_ev), 0);
-        }
+        },
         MouseAction::WheelScrolled { delta_x, delta_y } => {
             host.send_mouse_wheel_event(Some(&cef_ev), delta_x, delta_y);
-        }
+        },
     }
 }
 

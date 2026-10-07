@@ -38,12 +38,12 @@ fn main() {
         Ok(value) => {
             eprintln!("helper: WELD_SANDBOX must be 'sandboxed' or unset, got {value:?}");
             std::process::exit(1);
-        }
+        },
         Err(std::env::VarError::NotPresent) => welding::CefSandboxMode::UnsandboxedTrustedContent,
         Err(error) => {
             eprintln!("helper: WELD_SANDBOX is not valid Unicode: {error}");
             std::process::exit(1);
-        }
+        },
     };
     let code = welding::CefRuntime::try_run_subprocess(&args, sandbox).unwrap_or_else(|error| {
         eprintln!("helper: {error}");

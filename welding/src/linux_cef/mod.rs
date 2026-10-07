@@ -285,10 +285,10 @@ impl LinuxCefProducer {
                     } else {
                         cef::PermissionRequestResult::DENY
                     });
-                }
+                },
                 crate::permissions::Pending::Media(callback, requested) => {
                     callback.cont(if granted { requested } else { 0 });
-                }
+                },
             }
             return Ok(());
         }

@@ -237,7 +237,7 @@ impl ApplicationHandler for DemoApp {
                 self.cef_runtime = Some(cef_runtime);
                 self.should_exit = true;
                 return;
-            }
+            },
         };
         self.pending = Some(PendingState {
             window,
@@ -268,7 +268,7 @@ impl ApplicationHandler for DemoApp {
             WindowEvent::CloseRequested => {
                 let _ = s.producer.close();
                 close_requested = true;
-            }
+            },
 
             WindowEvent::ScaleFactorChanged { scale_factor, .. } => {
                 // The window crossed onto a display with a different density.
@@ -281,26 +281,26 @@ impl ApplicationHandler for DemoApp {
                 } else if let Err(err) = s.producer.set_scale_factor(scale_factor as f32) {
                     log_scale_err(err);
                 }
-            }
+            },
 
             WindowEvent::Resized(size) => {
                 s.surface_config.width = size.width.max(1);
                 s.surface_config.height = size.height.max(1);
                 s.surface.configure(&s.host_ctx.device, &s.surface_config);
                 let _ = s.producer.resize(size);
-            }
+            },
 
             WindowEvent::Focused(true) => {
                 s.focus_pending = true;
                 s.focus_attempted = false;
-            }
+            },
 
             WindowEvent::ModifiersChanged(m) => {
                 s.mods.shift = m.state().shift_key();
                 s.mods.ctrl = m.state().control_key();
                 s.mods.alt = m.state().alt_key();
                 s.mods.meta = m.state().super_key();
-            }
+            },
 
             WindowEvent::KeyboardInput { event: ke, .. } => {
                 if s.frames_imported == 0 {
@@ -336,7 +336,7 @@ impl ApplicationHandler for DemoApp {
                         modifiers: s.mods,
                     });
                 }
-            }
+            },
 
             WindowEvent::CursorMoved { position, .. } => {
                 s.cursor = (position.x as f32, position.y as f32);
@@ -350,7 +350,7 @@ impl ApplicationHandler for DemoApp {
                     action: MouseAction::Moved,
                     modifiers: s.mods,
                 });
-            }
+            },
 
             WindowEvent::MouseInput { state, button, .. } => {
                 let mb = match button {
@@ -368,10 +368,10 @@ impl ApplicationHandler for DemoApp {
                     MouseButton::Left => s.mods.left_mouse_button = state == ElementState::Pressed,
                     MouseButton::Middle => {
                         s.mods.middle_mouse_button = state == ElementState::Pressed
-                    }
+                    },
                     MouseButton::Right => {
                         s.mods.right_mouse_button = state == ElementState::Pressed
-                    }
+                    },
                 }
                 if s.frames_imported == 0 {
                     return;
@@ -383,7 +383,7 @@ impl ApplicationHandler for DemoApp {
                     action,
                     modifiers: s.mods,
                 });
-            }
+            },
 
             WindowEvent::MouseWheel { delta, .. } => {
                 if s.frames_imported == 0 {
@@ -403,12 +403,12 @@ impl ApplicationHandler for DemoApp {
                     },
                     modifiers: s.mods,
                 });
-            }
+            },
 
             // Deliberately no RedrawRequested arm. CEF's message pump and the
             // render both run from the outer loop in `main`, never from inside
             // a winit callback. See `DemoApp::tick`.
-            _ => {}
+            _ => {},
         }
         if close_requested {
             self.should_exit = true;
@@ -432,13 +432,13 @@ impl DemoApp {
             Ok(None) => {
                 self.pending = Some(pending);
                 return;
-            }
+            },
             Ok(Some(producer)) => producer,
             Err(err) => {
                 log::error!("failed to create CEF browser surface: {err}");
                 self.should_exit = true;
                 return;
-            }
+            },
         };
         log::info!(
             "creating CEF browser ({}x{}) at {}",
@@ -505,8 +505,8 @@ impl DemoApp {
                     new_frame.format
                 );
                 s.frame = Some(new_frame);
-            }
-            Ok(None) => {}
+            },
+            Ok(None) => {},
             Err(e) => log::error!("acquire_frame error: {e}"),
         }
 
@@ -533,8 +533,8 @@ impl DemoApp {
                     popup.rect.y
                 );
                 s.popup = Some(popup);
-            }
-            Ok(None) => {}
+            },
+            Ok(None) => {},
             Err(e) => log::error!("acquire_popup error: {e}"),
         }
         if s.producer.popup_rect().is_none() && s.popup.take().is_some() {
@@ -555,20 +555,20 @@ impl DemoApp {
                     scripted::answer_auth_if_challenged(&mut s.producer, &event);
                     scripted::answer_permission_if_asked(&mut s.producer, &event);
                     scripted::finish_page_drag_if_started(&mut s.producer, &event);
-                }
+                },
                 CefSurfaceEvent::WebMessage(message) => {
                     log::info!("web message: {message}");
                     receipt(format_args!("web message: {message}"));
-                }
+                },
                 CefSurfaceEvent::ScriptCompleted { id, result } => match result {
                     Ok(json) => {
                         log::info!("SCRIPT #{id} => {json}");
                         receipt(format_args!("script #{id}: {json}"));
-                    }
+                    },
                     Err(err) => {
                         log::error!("SCRIPT #{id} threw: {err}");
                         receipt(format_args!("script #{id} failed: {err}"));
-                    }
+                    },
                 },
                 CefSurfaceEvent::CookiesCompleted { id, result } => match result {
                     Ok(cookies) => {
@@ -581,10 +581,10 @@ impl DemoApp {
                                 cookie.domain
                             );
                         }
-                    }
+                    },
                     Err(err) => log::error!("COOKIES #{id} failed: {err}"),
                 },
-                _ => {}
+                _ => {},
             }
         }
 
@@ -598,11 +598,11 @@ impl DemoApp {
                     Ok(()) => {
                         eprintln!("weld demo: find {text:?}");
                         receipt(format_args!("find requested: {text:?}"));
-                    }
+                    },
                     Err(e) => {
                         eprintln!("weld demo: find failed: {e}");
                         receipt(format_args!("find failed: {e}"));
-                    }
+                    },
                 }
             }
             if let Ok(pdf) = std::env::var("WELD_PDF") {
@@ -610,11 +610,11 @@ impl DemoApp {
                     Ok(()) => {
                         eprintln!("weld demo: print_to_pdf {pdf}");
                         receipt(format_args!("pdf requested: {pdf}"));
-                    }
+                    },
                     Err(e) => {
                         eprintln!("weld demo: print_to_pdf failed: {e}");
                         receipt(format_args!("pdf request failed: {e}"));
-                    }
+                    },
                 }
             }
             if std::env::var("WELD_PRINT").is_ok() {
@@ -715,12 +715,12 @@ impl DemoApp {
                                     path.display()
                                 );
                                 receipt(format_args!("snapshot: {} bytes", bytes.len()));
-                            }
+                            },
                             Ok(()) => eprintln!("weld demo: snapshot was not a PNG"),
                             Err(e) => eprintln!("weld demo: could not write snapshot: {e}"),
                         }
                     }
-                }
+                },
                 Err(e) => eprintln!("weld demo: snapshot #{snapshot_id} failed: {e}"),
             }
         }
@@ -913,10 +913,10 @@ pub(crate) fn pixel_fixture_expected(format: wgpu::TextureFormat) -> Option<[u8;
     match format {
         wgpu::TextureFormat::Bgra8Unorm | wgpu::TextureFormat::Bgra8UnormSrgb => {
             Some([255, 144, 30, 255])
-        }
+        },
         wgpu::TextureFormat::Rgba8Unorm | wgpu::TextureFormat::Rgba8UnormSrgb => {
             Some([30, 144, 255, 255])
-        }
+        },
         _ => None,
     }
 }

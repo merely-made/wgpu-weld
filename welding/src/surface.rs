@@ -698,7 +698,7 @@ impl CefSurfaceConfig {
         match self.background_color {
             Some([r, g, b]) => {
                 0xFF00_0000 | (u32::from(r) << 16) | (u32::from(g) << 8) | u32::from(b)
-            }
+            },
             None => 0,
         }
     }

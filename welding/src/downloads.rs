@@ -107,7 +107,7 @@ impl Downloads {
             _ => {
                 inner.last_progress.insert(id, now);
                 true
-            }
+            },
         }
     }
 
