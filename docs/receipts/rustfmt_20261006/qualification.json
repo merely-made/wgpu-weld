@@ -1,0 +1,68 @@
+{
+  "schema": "weld-format-qualification-v1",
+  "observed_utc": "2026-10-07T03:05:18.6870397Z",
+  "local_date": "2026-10-06 EDT",
+  "baseline_commit": "b5cf0435398234f26f79239048dd97e8e1571716",
+  "format_commit": "8ac21cc1e396b13ca7d4b4c44ebfb9d5450246b8",
+  "blame_ignore_metadata_commit": "caaf07f68e1ce8dfb43bbb3453b5c86d0df0d231",
+  "original_failed_ci": {
+    "run_id": 37530088138,
+    "job_id": 112496970310,
+    "job_url": "https://github.com/merely-made/wgpu-weld/actions/runs/37530088138/job/112496970310",
+    "checkout_sha": "b5cf0435398234f26f79239048dd97e8e1571716",
+    "toolchain": "1.97.1",
+    "command": "cargo fmt --all --check",
+    "conclusion": "failure",
+    "completed_utc": "2026-10-06T20:55:40Z",
+    "cause": "Configured trailing commas after match-arm blocks were missing"
+  },
+  "local_qualification": {
+    "toolchain": "1.97.1",
+    "rustfmt_version": "rustfmt 1.9.0-stable (8bab26f4f6 2026-07-14)",
+    "exact_ci_command": "cargo +1.97.1 fmt --all --check",
+    "exact_ci_exit": 0,
+    "diff_check_command": "git diff --check",
+    "diff_check_exit": 0,
+    "changed_rust_files": 18,
+    "changed_line_pairs": 148,
+    "pairwise_guard": "Every added diff line equals its corresponding removed line plus one trailing comma",
+    "pairwise_guard_result": "PASS",
+    "dependency_toolchain_policy_and_lock_blobs": "Unchanged from baseline",
+    "runtime_statement_changes": "None",
+    "source_tree_oids": {
+      "welding/src": "ed00c333ac5f634e4b28dce3a7f402972c85a347",
+      "demo-weld-linux/src": "e32c82b66d0fb31b1050fbac67352e7525fadc66",
+      "demo-weld-mac/src": "ed0f0b24e3a5a74340d1ee3d445e76bb04ac600a",
+      "demo-weld-win/src": "e0be1513b659f3785b87682bedbe8ed6d79bfc92"
+    },
+    "changed_paths": [
+      "demo-weld-linux/src/main.rs",
+      "demo-weld-linux/src/scripted.rs",
+      "demo-weld-mac/src/helper.rs",
+      "demo-weld-mac/src/main.rs",
+      "demo-weld-mac/src/present.rs",
+      "demo-weld-mac/src/scripted.rs",
+      "demo-weld-win/src/main.rs",
+      "demo-weld-win/src/scripted.rs",
+      "welding/src/cef_input.rs",
+      "welding/src/cookies.rs",
+      "welding/src/downloads.rs",
+      "welding/src/drag.rs",
+      "welding/src/linux_cef/mod.rs",
+      "welding/src/macos_cef/mod.rs",
+      "welding/src/native_frame/vulkan_dmabuf.rs",
+      "welding/src/runtime.rs",
+      "welding/src/surface.rs",
+      "welding/src/windows_cef/mod.rs"
+    ]
+  },
+  "current_ci": {
+    "status_at_receipt_creation": "Pending automatic CI after normal main push",
+    "workflow": "wgpu-matrix.yml",
+    "expected_rows": "rustfmt; nine ubuntu/macOS/Windows x wgpu28/29/30 library rows; three platform demo rows",
+    "identity": "Qualify the pushed current head; do not rerun the older failed job",
+    "evidence_boundary": "Local formatting checks do not establish current automated compiler/lint/demo results"
+  },
+  "hardware_boundary": "Existing b5cf043 hardware results remain scoped to that commit; this receipt does not claim fresh hardware, MSRV or package/registry qualification",
+  "resources": "No build, native app, isolated Cargo target/home or worktree created"
+}
