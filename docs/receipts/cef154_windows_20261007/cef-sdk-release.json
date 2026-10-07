@@ -1,0 +1,57 @@
+{
+  "cef_version": "154.0.34+g14c5a08+chromium-154.0.8037.98",
+  "channel": "stable",
+  "chromium_version": "154.0.8037.98",
+  "files": [
+    {
+      "last_modified": "2026-10-05T05:08:03.913Z",
+      "name": "cef_binary_154.0.34+g14c5a08+chromium-154.0.8037.98_windows64_signed.tar.xz",
+      "sha1": "14d8ae6a183e4f9e944e3e4ad72a4f50d98fc6ae",
+      "size": 137799728,
+      "type": "signed"
+    },
+    {
+      "last_modified": "2026-10-05T05:07:54.258Z",
+      "name": "cef_binary_154.0.34+g14c5a08+chromium-154.0.8037.98_windows64_tools.tar.bz2",
+      "sha1": "74d36536ed51ba493906232af973e585cd66140b",
+      "size": 216627078,
+      "type": "tools"
+    },
+    {
+      "last_modified": "2026-10-05T05:07:29.813Z",
+      "name": "cef_binary_154.0.34+g14c5a08+chromium-154.0.8037.98_windows64_release_symbols.tar.bz2",
+      "sha1": "337fccc8148610e1be8777e6a67995d37c028bd6",
+      "size": 900711000,
+      "type": "release_symbols"
+    },
+    {
+      "last_modified": "2026-10-05T05:05:57.309Z",
+      "name": "cef_binary_154.0.34+g14c5a08+chromium-154.0.8037.98_windows64_minimal.tar.bz2",
+      "sha1": "be54bbaf3222191dec59ffd9c9ec7e8a7f44a26d",
+      "size": 172752666,
+      "type": "minimal"
+    },
+    {
+      "last_modified": "2026-10-05T05:05:32.288Z",
+      "name": "cef_binary_154.0.34+g14c5a08+chromium-154.0.8037.98_windows64_debug_symbols.tar.bz2",
+      "sha1": "1f68a6a0aa0fb84f16b1c039bc962c84dfe04a93",
+      "size": 1029160477,
+      "type": "debug_symbols"
+    },
+    {
+      "last_modified": "2026-10-05T05:04:36.768Z",
+      "name": "cef_binary_154.0.34+g14c5a08+chromium-154.0.8037.98_windows64_client.tar.bz2",
+      "sha1": "446e74f2ed1bf6a8714bed8b4fc099cc6c258a65",
+      "size": 170057166,
+      "type": "client"
+    },
+    {
+      "last_modified": "2026-10-05T05:04:27.617Z",
+      "name": "cef_binary_154.0.34+g14c5a08+chromium-154.0.8037.98_windows64.tar.bz2",
+      "sha1": "8c705a2ef1ce5f7b9655729a2d3de5d033a24d8b",
+      "size": 365396143,
+      "type": "standard"
+    }
+  ],
+  "sandbox_compat": "265fca9293e6b6ef"
+}

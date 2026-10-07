@@ -1,0 +1,65 @@
+   Compiling cef-dll-sys v154.5.0+154.0.34
+    Checking winapi v0.3.9
+    Checking camino v1.2.5
+    Checking cargo-platform v0.3.3
+    Checking serde v1.0.229
+    Checking semver v1.0.28
+    Checking aho-corasick v1.1.5
+   Compiling grafting v0.6.0
+    Checking dpi v0.1.2
+    Checking regex-syntax v0.8.11
+    Checking regex-automata v0.4.18
+    Checking cargo_metadata v0.23.1
+    Checking wio v0.2.2
+    Checking windows_x86_64_msvc v0.52.6
+    Checking clap v4.6.6
+    Checking anyhow v1.0.104
+   Compiling welding v0.15.0 (C:\Users\mark_\Code\repos\wgpu-weld\welding)
+    Checking cef v154.5.0+154.0.34
+    Checking windows-targets v0.52.6
+    Checking regex v1.13.1
+   Compiling winit v0.30.13
+    Checking base64 v0.22.1
+    Checking jiff-core v0.1.0
+    Checking jiff v0.2.35
+    Checking env_filter v2.0.0
+    Checking windows-sys v0.52.0
+    Checking smol_str v0.2.2
+    Checking unicode-segmentation v1.13.3
+    Checking cursor-icon v1.2.0
+    Checking env_logger v0.11.11
+    Checking pollster v0.4.0
+    Checking demo-weld-win v0.1.0 (C:\Users\mark_\Code\repos\wgpu-weld\demo-weld-win)
+    Checking demo-weld-mac v0.1.0 (C:\Users\mark_\Code\repos\wgpu-weld\demo-weld-mac)
+    Checking demo-weld-linux v0.1.0 (C:\Users\mark_\Code\repos\wgpu-weld\demo-weld-linux)
+error[E0432]: unresolved import `welding::linux_cef`
+   --> demo-weld-linux\src\main.rs:87:5
+    |
+ 87 |     linux_cef::{LinuxCefConfig, LinuxCefProducer},
+    |     ^^^^^^^^^ could not find `linux_cef` in `welding`
+    |
+note: found an item that was configured out
+   --> welding\src\lib.rs:100:9
+    |
+ 99 | #[cfg(target_os = "linux")]
+    |       ------------------- the item is gated behind the `linux` feature
+100 | pub mod linux_cef;
+    |         ^^^^^^^^^
+
+error[E0425]: cannot find function `build_dmabuf_capable_device` in crate `welding`
+   --> demo-weld-linux\src\main.rs:208:44
+    |
+208 |             let (device, queue) = welding::build_dmabuf_capable_device(
+    |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^ not found in `welding`
+    |
+note: found an item that was configured out
+   --> welding\src\lib.rs:121:23
+    |
+120 | #[cfg(target_os = "linux")]
+    |       ------------------- the item is gated behind the `linux` feature
+121 | pub use native_frame::build_dmabuf_capable_device;
+    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Some errors have detailed explanations: E0425, E0432.
+For more information about an error, try `rustc --explain E0425`.
+error: could not compile `demo-weld-linux` (bin "demo-weld-linux") due to 2 previous errors

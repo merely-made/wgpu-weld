@@ -30,4 +30,4 @@ env_logger = "0.11"
 [target.'cfg(windows)'.dependencies]
 # raw-window-handle for the wgpu surface (winit 0.30 uses rwh 0.6)
 raw-window-handle.workspace = true
-cef = { version = "151", features = ["accelerated_osr", "build-util", "sandbox"] }
+cef = { workspace = true, features = ["accelerated_osr", "build-util", "sandbox"] }

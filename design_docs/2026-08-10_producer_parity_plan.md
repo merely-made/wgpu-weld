@@ -1,7 +1,10 @@
 # Producer Parity Plan: welding / scrying / grafting
 
 **Date:** 2026-08-10
-**Status (2026-10-05):** W1-W9 landed. Exact-HEAD parity run `37205146754`
+**Status (2026-10-07):** Current CEF 154 migration has a passing locked Windows
+runtime/demo typed check, 60 library tests, and sandboxed native DX12 pixel
+smoke. CEF 154 Linux/Metal hardware and MSRV gates remain open.
+W1-W9 landed. Exact-HEAD parity run `37205146754`
 is green on all four hosts, including NVIDIA. Hardware run `37197779933`
 passes on both Macs and NVIDIA but fails RADV before the product test at a
 stale logind session-ID assertion. The bounded session-discovery repair is
@@ -1346,3 +1349,42 @@ pattern from demo-weld-mac generalizes). G1 whenever, it gates nothing local.
   a fresh preflight and CEF pixel receipt pass on RADV. No workflow was
   dispatched for this edit; native acceptance and
   published-package proof remain separate.
+
+- 2026-10-07: **Current CEF migration in progress.** Official registry responses
+  resolve the latest unyanked stable `cef`/`cef-dll-sys` pair to
+  `154.5.0+154.0.34`; the matching stable Windows SDK is
+  `154.0.34+g14c5a08+chromium-154.0.8037.98`. All direct demo/runtime CEF rows
+  now share the workspace binding requirement. The matching minimal SDK is
+  retained under the established version/platform cache convention; upstream
+  SHA1 and local SHA256 are recorded in `docs/receipts/cef154_windows_20261007/`.
+  Existing handler signatures compare unchanged on Windows, Linux, and macOS.
+  Done-conditions: locked Windows runtime/demo checks, library contract tests,
+  sandboxed deterministic native pixel smoke, and a reviewed immutable commit.
+  Prior 151 receipts remain historical; fresh Linux/Metal CEF 154 hardware
+  parity and MSRV gates are separate from this Windows migration.
+
+- 2026-10-07, CEF 154 qualification: locked Windows Welding/demo all-targets
+  check and all 60 Welding library tests with `cef-runtime` pass on Rust 1.97.1.
+  No Rust adapter API changes are required. The lock changes only the CEF pair
+  and `download-cef` to 3.0.0, adding the existing `cc` edge and reselecting
+  `winapi-util` to an already locked Windows support version. Two diagnostic
+  failures remain in the receipt: initial raw SDK extraction lacked the
+  upstream Release/Resources flattening, then an overbroad workspace check
+  attempted the Linux demo on Windows. The first runner returned a null exit
+  code; its result is not treated as a passing gate. Corrected runner owns the
+  process handle and refuses unavailable exit status. Sandbox bundle/native
+  pixel done-conditions remain pending.
+
+- 2026-10-07, CEF 154 Windows native qualification: locked demo build and
+  sandbox bundle pass. Both exclusive-profile pixel runs report 4096/4096
+  expected BGRA center pixels, native exit zero, and normal browser close.
+  The second runner freezes both bootstrap executable and actual Rust client
+  DLL before/after; observed loaded `demo-weld-win.dll` and `libcef.dll`
+  hashes match those artifacts and the verified SDK. First-run executable
+  fingerprint covered the bootstrap only; its raw 61 source inputs and
+  original helper are archived separately. Each archive is verified against
+  its source manifest. The current helper records actual owned-process
+  module observations and limitations without inferring absence. No runtime
+  Rust code, sandbox policy, native DevTools refusal, or interop pin changed.
+  CEF 154 Linux/Metal hardware parity, MSRV, and coordinated Turnstone
+  consumer qualification remain separate gates.

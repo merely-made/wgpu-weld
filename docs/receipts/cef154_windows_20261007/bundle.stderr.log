@@ -1,0 +1,12 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.84s
+     Running `C:/t/cargo-targets/wgpu-weld\debug\bundle-demo-weld-win.exe C:/t/cargo-targets/wgpu-weld/bundle/cef154`
+   Compiling ring v0.17.14
+   Compiling rustls v0.23.43
+   Compiling rustls-webpki v0.103.15
+   Compiling ureq v3.4.0
+   Compiling download-cef v3.0.0
+   Compiling cef-dll-sys v154.5.0+154.0.34
+   Compiling cef v154.5.0+154.0.34
+   Compiling welding v0.15.0 (C:\Users\mark_\Code\repos\wgpu-weld\welding)
+   Compiling demo-weld-win v0.1.0 (C:\Users\mark_\Code\repos\wgpu-weld\demo-weld-win)
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 36.05s

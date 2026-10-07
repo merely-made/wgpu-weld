@@ -1,0 +1,2 @@
+# Preserve qualified receipt/helper bytes and hashes across Git checkouts.
+* -text -whitespace

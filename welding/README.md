@@ -32,6 +32,11 @@ How far each row has been taken:
 | `wgpu-29` | compiles on all three hosts; DX12 and Metal retain their live receipts, while content-preserving CEF DMABUF import now returns a typed version error |
 | `wgpu-28` | compiles on all three hosts; **not** exercised on hardware, and CEF DMABUF import returns the same typed version error |
 
+Main targets CEF 154 (`154.5.0+154.0.34`, Chromium `154.0.8037.98`).
+The migration is being qualified on Windows under
+`../docs/receipts/cef154_windows_20261007/`. The historical tables below
+continue to describe CEF 151, with fresh Mac and Linux runtime gates open.
+
 ## State, 2026-09-04
 
 Version 0.14.1 is the current published release. It refuses CEF 151's unsafe

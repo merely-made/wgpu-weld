@@ -1,0 +1,7 @@
+https://crates.io/api/v1/crates/cef
+https://crates.io/api/v1/crates/cef-dll-sys
+https://crates.io/api/v1/crates/cef/154.5.0%2B154.0.34
+https://crates.io/api/v1/crates/cef-dll-sys/154.5.0%2B154.0.34
+https://cef-builds.spotifycdn.com/index.json
+https://cef-builds.spotifycdn.com/cef_binary_154.0.34%2Bg14c5a08%2Bchromium-154.0.8037.98_windows64_minimal.tar.bz2
+https://crates.io/crates/download-cef/3.0.0
