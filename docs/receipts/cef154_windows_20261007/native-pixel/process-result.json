@@ -1,0 +1,45 @@
+{
+    "cache_root":  "C:\\Users\\mark_\\Code\\repos\\wgpu-weld\\docs\\receipts\\cef154_windows_20261007\\.profiles\\cef154-pixel",
+    "cef_path":  "C:/t/cargo-targets/wgpu-weld/bundle/cef154",
+    "executable_unchanged":  true,
+    "exit_after_frames":  2,
+    "exit_code":  0,
+    "module_observer_limitations":  [
+
+                                    ],
+    "started_utc":  "2026-10-07T07:04:11.3222749Z",
+    "pid":  36584,
+    "profile":  "C:\\Users\\mark_\\Code\\repos\\wgpu-weld\\docs\\receipts\\cef154_windows_20261007\\.profiles\\cef154-pixel\\profile",
+    "executable_sha256":  "0b6c80b6c81615f8c2b6c051d698cb9ff93d626fb82016ce61eefd62d8cc4fec",
+    "command":  [
+                    "C:\\t\\cargo-targets\\wgpu-weld\\bundle\\cef154\\demo-weld-win.exe"
+                ],
+    "modules":  [
+                    {
+                        "sha256":  "310f89b07256018034c42c48bcaa0f550c13afe4634be4e00bf1419af35e274c",
+                        "path":  "C:\\WINDOWS\\SYSTEM32\\dxgi.dll"
+                    },
+                    {
+                        "sha256":  "5f3b4c8ab126c9342c040ad9f268e3a3907242faf141b644cf17a14f4ecbed1b",
+                        "path":  "C:\\WINDOWS\\SYSTEM32\\d3d12.dll"
+                    },
+                    {
+                        "sha256":  "d2bcdaab7772d60d2f2c53781bf4449dde9e6491ec82b24da3f581c21c12d110",
+                        "path":  "C:\\t\\cargo-targets\\wgpu-weld\\bundle\\cef154\\dxcompiler.dll"
+                    },
+                    {
+                        "sha256":  "e3da6707a840a8f33f565e011542169fd51aaa5218603eb7a89039fb16d79ae7",
+                        "path":  "C:\\t\\cargo-targets\\wgpu-weld\\bundle\\cef154\\libcef.dll"
+                    },
+                    {
+                        "sha256":  "d04fd4146b1d07b9b8b377001bb4ffa22bdceb38d5faccf91c9e9a318e0fb0ce",
+                        "path":  "C:\\WINDOWS\\SYSTEM32\\d3d11.dll"
+                    }
+                ],
+    "finished_utc":  "2026-10-07T07:04:13.8803133Z",
+    "native_timeout_seconds":  30,
+    "supervisor_deadline_seconds":  90,
+    "passed":  true,
+    "pixel_fixture":  1,
+    "timeout":  false
+}

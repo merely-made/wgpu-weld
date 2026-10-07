@@ -1,0 +1,6 @@
+{
+  "source": "https://crates.io/crates/download-cef/3.0.0",
+  "staging": "Flattened Release and Resources into SDK root as download-cef3.0.0::extract_target_archive specifies; unmodified headers/wrapper sources retained; empty original directories retained",
+  "sdk_path": "C:\\Users\\mark_\\Code\\cef-cache\\wgpu-weld\\154.0.34\\cef_windows_x86_64",
+  "runtime_sha256": "e3da6707a840a8f33f565e011542169fd51aaa5218603eb7a89039fb16d79ae7"
+}

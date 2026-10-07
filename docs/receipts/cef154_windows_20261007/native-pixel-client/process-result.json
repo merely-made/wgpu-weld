@@ -1,0 +1,52 @@
+{
+    "modules":  [
+                    {
+                        "sha256":  "d2bcdaab7772d60d2f2c53781bf4449dde9e6491ec82b24da3f581c21c12d110",
+                        "path":  "C:\\t\\cargo-targets\\wgpu-weld\\bundle\\cef154\\dxcompiler.dll"
+                    },
+                    {
+                        "sha256":  "1e4afb922fb6b624931a6fca8c8bb9ebb20687284c276182c2fa2e0b509e754e",
+                        "path":  "C:\\t\\cargo-targets\\wgpu-weld\\bundle\\cef154\\demo-weld-win.dll"
+                    },
+                    {
+                        "sha256":  "e3da6707a840a8f33f565e011542169fd51aaa5218603eb7a89039fb16d79ae7",
+                        "path":  "C:\\t\\cargo-targets\\wgpu-weld\\bundle\\cef154\\libcef.dll"
+                    },
+                    {
+                        "sha256":  "d04fd4146b1d07b9b8b377001bb4ffa22bdceb38d5faccf91c9e9a318e0fb0ce",
+                        "path":  "C:\\WINDOWS\\SYSTEM32\\d3d11.dll"
+                    },
+                    {
+                        "sha256":  "5f3b4c8ab126c9342c040ad9f268e3a3907242faf141b644cf17a14f4ecbed1b",
+                        "path":  "C:\\WINDOWS\\SYSTEM32\\d3d12.dll"
+                    },
+                    {
+                        "sha256":  "310f89b07256018034c42c48bcaa0f550c13afe4634be4e00bf1419af35e274c",
+                        "path":  "C:\\WINDOWS\\SYSTEM32\\dxgi.dll"
+                    }
+                ],
+    "exit_after_frames":  2,
+    "supervisor_deadline_seconds":  90,
+    "pixel_fixture":  1,
+    "exit_code":  0,
+    "cef_path":  "C:/t/cargo-targets/wgpu-weld/bundle/cef154",
+    "client_dll_sha256":  "1e4afb922fb6b624931a6fca8c8bb9ebb20687284c276182c2fa2e0b509e754e",
+    "cache_root":  "C:\\Users\\mark_\\Code\\repos\\wgpu-weld\\docs\\receipts\\cef154_windows_20261007\\.profiles\\cef154-native-pixel-client",
+    "started_utc":  "2026-10-07T07:06:50.3513377Z",
+    "client_dll":  "C:\\t\\cargo-targets\\wgpu-weld\\bundle\\cef154\\demo-weld-win.dll",
+    "executable_sha256":  "0b6c80b6c81615f8c2b6c051d698cb9ff93d626fb82016ce61eefd62d8cc4fec",
+    "executable_unchanged":  true,
+    "pid":  30408,
+    "timeout":  false,
+    "native_timeout_seconds":  30,
+    "passed":  true,
+    "client_dll_unchanged":  true,
+    "module_observer_limitations":  [
+
+                                    ],
+    "command":  [
+                    "C:\\t\\cargo-targets\\wgpu-weld\\bundle\\cef154\\demo-weld-win.exe"
+                ],
+    "profile":  "C:\\Users\\mark_\\Code\\repos\\wgpu-weld\\docs\\receipts\\cef154_windows_20261007\\.profiles\\cef154-native-pixel-client\\profile",
+    "finished_utc":  "2026-10-07T07:06:52.4490892Z"
+}

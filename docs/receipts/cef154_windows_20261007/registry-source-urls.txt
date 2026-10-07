@@ -1,0 +1,2 @@
+https://crates.io/api/v1/crates/cef
+https://crates.io/api/v1/crates/cef-dll-sys

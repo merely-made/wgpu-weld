@@ -24,8 +24,9 @@ This is the canonical index for active documentation in this repository.
 - [CEF accelerated OSR plan](2026-05-14_cef_accelerated_osr_plan.md): CEF
   windowless rendering and GPU-import implementation record.
 - [Producer parity plan](2026-08-10_producer_parity_plan.md): cross-lane
-  capability matrix and evidence, including current green parity and the local
-  RADV session-preflight repair awaiting native acceptance.
+  capability matrix and evidence, including current green parity, the CEF 154
+  migration gates, and the local RADV session-preflight repair awaiting native
+  acceptance.
 
 ## Maintainer-owned description
 

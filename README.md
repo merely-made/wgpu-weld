@@ -47,6 +47,17 @@ mismatches fail the process. Per-platform detail, and the difference between
 "verified on that hardware" and "implemented but not yet run there", is in
 [`welding/README.md`](welding/README.md).
 
+Main now targets CEF 154 (`cef` and `cef-dll-sys`
+`154.5.0+154.0.34`, Chromium `154.0.8037.98`), as recorded by the
+[CEF registry](https://crates.io/api/v1/crates/cef/154.5.0%2B154.0.34),
+[sys registry](https://crates.io/api/v1/crates/cef-dll-sys/154.5.0%2B154.0.34),
+and [official SDK index](https://cef-builds.spotifycdn.com/index.json). Its migration receipts
+live in `docs/receipts/cef154_windows_20261007/`; older CEF 151 hardware
+receipts below retain their original scope. The native DevTools-window
+refusal and sandbox policy remain unchanged. The locked Windows check, 60
+library tests, and sandboxed DX12 pixel smoke pass; fresh CEF 154 Linux/Metal
+runtime parity and MSRV gates remain open.
+
 Main is preparing the breaking 0.15.0 line. Its first change makes owned native
 frame delivery a required cross-platform producer operation so neutral hosts
 can keep custody intact before choosing an importer.

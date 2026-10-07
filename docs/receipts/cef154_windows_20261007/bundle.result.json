@@ -1,0 +1,27 @@
+﻿{
+    "gate":  "bundle",
+    "cwd":  "C:\\Users\\mark_\\Code\\repos\\wgpu-weld",
+    "started_utc":  "2026-10-07T07:03:11.0630878Z",
+    "cef_path":  "C:/Users/mark_/Code/cef-cache/wgpu-weld/154.0.34/cef_windows_x86_64",
+    "command":  [
+                    "cargo",
+                    "+1.97.1",
+                    "run",
+                    "--locked",
+                    "-p",
+                    "demo-weld-win",
+                    "--bin",
+                    "bundle-demo-weld-win",
+                    "-j",
+                    "1",
+                    "--",
+                    "C:/t/cargo-targets/wgpu-weld/bundle/cef154"
+                ],
+    "finished_utc":  "2026-10-07T07:03:52.7090250Z",
+    "jobs":  1,
+    "target":  "C:/t/cargo-targets/wgpu-weld",
+    "libclang_path":  "C:/Program Files/LLVM/bin",
+    "pid":  33444,
+    "exit_code":  0,
+    "priority":  "BelowNormal"
+}

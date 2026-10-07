@@ -9,7 +9,7 @@
 //! # Running
 //!
 //! ```text
-//! export CEF_PATH=/path/to/cef_binary_151.x_linux64
+//! export CEF_PATH=/path/to/cef_binary_154.x_linux64
 //! export LD_LIBRARY_PATH=$CEF_PATH:$LD_LIBRARY_PATH
 //! cargo run -p demo-weld-linux
 //! ```

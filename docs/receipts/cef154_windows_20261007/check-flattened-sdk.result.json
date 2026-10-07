@@ -1,0 +1,23 @@
+﻿{
+    "gate":  "check",
+    "cwd":  "C:\\Users\\mark_\\Code\\repos\\wgpu-weld",
+    "started_utc":  "2026-10-07T06:36:53.5526839Z",
+    "cef_path":  "C:/Users/mark_/Code/cef-cache/wgpu-weld/154.0.34/cef_windows_x86_64",
+    "command":  [
+                    "cargo",
+                    "+1.97.1",
+                    "check",
+                    "--locked",
+                    "--workspace",
+                    "--all-targets",
+                    "-j",
+                    "1"
+                ],
+    "finished_utc":  "2026-10-07T06:41:08.9766870Z",
+    "jobs":  1,
+    "target":  "C:/t/cargo-targets/wgpu-weld",
+    "libclang_path":  "C:/Program Files/LLVM/bin",
+    "pid":  17060,
+    "exit_code":  101,
+    "priority":  "BelowNormal"
+}

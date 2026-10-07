@@ -1,0 +1,153 @@
+{
+  "baseline_head": "2d9695b0670c3a80784ce97589d5f1cac31dfe85",
+  "before_package_count": 409,
+  "after_package_count": 409,
+  "removed": [
+    {
+      "name": "cef-dll-sys",
+      "version": "151.8.0+151.3.24",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "aa695f38d1a974db36b921a1379eb98b52c668c4734e91a48a8eb290d6db37c1",
+      "dependencies": [
+        "anyhow",
+        "cmake",
+        "download-cef",
+        "serde_json"
+      ]
+    },
+    {
+      "name": "cef",
+      "version": "151.8.0+151.3.24",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "c820cb3f8f13c1a105d08c42db195172d954df44ec58efe9b647d581c03063f0",
+      "dependencies": [
+        "anyhow",
+        "ash",
+        "cargo_metadata",
+        "cef-dll-sys",
+        "clap",
+        "libc",
+        "libloading 0.9.0",
+        "objc2 0.6.4",
+        "objc2-foundation 0.3.2",
+        "objc2-io-surface",
+        "objc2-metal 0.3.2",
+        "plist",
+        "semver",
+        "serde",
+        "serde_json",
+        "thiserror 2.0.20",
+        "tracing",
+        "wgpu 30.0.1",
+        "windows",
+        "windows-sys 0.61.2"
+      ]
+    },
+    {
+      "name": "download-cef",
+      "version": "2.3.2",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "c169adf067a787e1f1c58ed62906a557de85388bee4b54fb878b722ff606b113",
+      "dependencies": [
+        "bzip2",
+        "clap",
+        "fs-err",
+        "indicatif",
+        "regex",
+        "semver",
+        "serde",
+        "serde_json",
+        "sha1_smol",
+        "tar",
+        "thiserror 2.0.20",
+        "ureq"
+      ]
+    }
+  ],
+  "added": [
+    {
+      "name": "cef-dll-sys",
+      "version": "154.5.0+154.0.34",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "a52b7101d21b13aaa09e5047510bc6b6720140de0ee2a65d132b9fd70fbf5f69",
+      "dependencies": [
+        "anyhow",
+        "cc",
+        "cmake",
+        "download-cef",
+        "serde_json"
+      ]
+    },
+    {
+      "name": "cef",
+      "version": "154.5.0+154.0.34",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "495579dcbddc7917da3c64d19de23771744743463dc77dddb6bddfd0ce97930b",
+      "dependencies": [
+        "anyhow",
+        "ash",
+        "cargo_metadata",
+        "cef-dll-sys",
+        "clap",
+        "libc",
+        "libloading 0.9.0",
+        "objc2 0.6.4",
+        "objc2-foundation 0.3.2",
+        "objc2-io-surface",
+        "objc2-metal 0.3.2",
+        "plist",
+        "semver",
+        "serde",
+        "serde_json",
+        "thiserror 2.0.20",
+        "tracing",
+        "wgpu 30.0.1",
+        "windows",
+        "windows-sys 0.61.2"
+      ]
+    },
+    {
+      "name": "download-cef",
+      "version": "3.0.0",
+      "source": "registry+https://github.com/rust-lang/crates.io-index",
+      "checksum": "05ee509499d14dc47da5f824e4bb1bd558ceb259adc5475956265d48787a80da",
+      "dependencies": [
+        "bzip2",
+        "clap",
+        "fs-err",
+        "indicatif",
+        "regex",
+        "semver",
+        "serde",
+        "serde_json",
+        "sha1_smol",
+        "tar",
+        "thiserror 2.0.20",
+        "ureq"
+      ]
+    }
+  ],
+  "same_version_changes": {
+    "winapi-util@0.1.11": {
+      "before": {
+        "name": "winapi-util",
+        "version": "0.1.11",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22",
+        "dependencies": [
+          "windows-sys 0.59.0"
+        ]
+      },
+      "after": {
+        "name": "winapi-util",
+        "version": "0.1.11",
+        "source": "registry+https://github.com/rust-lang/crates.io-index",
+        "checksum": "c2a7b1c03c876122aa43f3020e6c3c3ee5c05081c9a00739faf7503aeba10d22",
+        "dependencies": [
+          "windows-sys 0.61.2"
+        ]
+      }
+    }
+  },
+  "all_other_records_exact": true
+}
