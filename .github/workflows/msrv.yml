@@ -3,7 +3,7 @@ name: welding MSRV
 # MSRV is a promise made to consumers at publication. It is verified when a
 # release is cut and on demand, not on every push: running it per-push spent a
 # nine-cell matrix re-answering an unchanged question, and its `-D warnings`
-# lane went red whenever Rust 1.92 linted something the pinned 1.97.1 does not
+# lane went red whenever Rust 1.97.1 linted something the pinned 1.97.1 does not
 # — a red badge with nothing to do behind it. Both of the last two failures of
 # this workflow were of that kind or were caught minutes later by `wgpu
 # matrix` anyway.
@@ -21,7 +21,7 @@ jobs:
     uses: merely-made/.github/.github/workflows/wgpu-msrv.yml@main
     with:
       crate: welding
-      toolchain: 1.92.0
+      toolchain: 1.97.1
       rustflags: -D warnings
       # The tests are version-independent; exercise them on the MSRV anchor
       # rather than tripling the same suite for each compatibility row.
@@ -33,7 +33,7 @@ jobs:
   # reported as an MSRV failure in the publishable Rust-only graph — the
   # version-check steps below exist to say which of the two it was.
   cef-runtime:
-    name: Rust 1.92 / ${{ matrix.os }} / cef-runtime
+    name: Rust 1.97.1 / ${{ matrix.os }} / cef-runtime
     runs-on: ${{ matrix.os }}
     timeout-minutes: 45
     strategy:
@@ -46,7 +46,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@1.92.0
+      - uses: dtolnay/rust-toolchain@1.97.1
       - name: Check CEF native build tools
         run: |
           cmake --version
