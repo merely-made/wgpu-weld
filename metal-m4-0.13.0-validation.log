@@ -1,0 +1,13 @@
+[2026-08-31T02:23:44Z INFO  demo_weld_mac] framework directory: /Users/markik/Code/worktrees/wgpu-weld-0.13.0-metal-m4/target/bundle/demo-weld-mac.app/Contents/Frameworks
+[2026-08-31T02:23:44Z INFO  demo_weld_mac] unattended mode: will exit after 1 imported frames or 90s
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] wgpu interop backend: Metal
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] creating CEF browser (1280x800) at https://example.com/
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] CEF browser created
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] imported frame #1 (1280x800 Bgra8Unorm)
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] nav: LoadStart { url: "https://example.com/" }
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] nav: AddressChanged { url: "https://example.com/" }
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] nav: TitleChanged { title: "Example Domain" }
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] nav: LoadEnd { url: "https://example.com/", http_status: 200 }
+[2026-08-31T02:23:45Z INFO  demo_weld_mac] nav: TitleChanged { title: "Example Domain" }
+[2026-08-31T02:23:45Z INFO  demo_weld_mac::present] probe: 16384/16384 bytes non-zero in the top-left corner; first pixels [[238, 238, 238, 255], [238, 238, 238, 255], [238, 238, 238, 255], [238, 238, 238, 255]]
+[2026-08-31T02:23:45Z INFO  demo_weld_mac::present] VALIDATION PASS: 1 frames imported and the IOSurface carried real pixels

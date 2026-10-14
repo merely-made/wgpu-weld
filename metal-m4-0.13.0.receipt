@@ -1,0 +1,5 @@
+nav: LoadStart { url: "https://example.com/" }
+nav: AddressChanged { url: "https://example.com/" }
+nav: TitleChanged { title: "Example Domain" }
+nav: LoadEnd { url: "https://example.com/", http_status: 200 }
+nav: TitleChanged { title: "Example Domain" }
