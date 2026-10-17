@@ -32,14 +32,34 @@ How far each row has been taken:
 | `wgpu-29` | compiles on all three hosts; DX12 and Metal retain their live receipts, while content-preserving CEF DMABUF import now returns a typed version error |
 | `wgpu-28` | compiles on all three hosts; **not** exercised on hardware, and CEF DMABUF import returns the same typed version error |
 
-Main targets CEF 154 (`154.5.0+154.0.34`, Chromium `154.0.8037.98`).
-The migration is being qualified on Windows under
-`../docs/receipts/cef154_windows_20261007/`. The historical tables below
-continue to describe CEF 151, with fresh Mac and Linux runtime gates open.
+Version 0.15.0 targets CEF 154 (`154.5.0+154.0.34`, Chromium
+`154.0.8037.98`) through `cef` 154.5.0, and needs those CEF binaries at
+runtime; CEF 151 binaries are not supported. The migration was qualified on
+Windows (receipts under `../docs/receipts/cef154_windows_20261007/`). The
+historical tables below continue to describe CEF 151, with fresh Mac and Linux
+runtime gates still open.
 
-## State, 2026-09-04
+## 0.15.0 (2026-10-17)
 
-Version 0.14.1 is the current published release. It refuses CEF 151's unsafe
+Breaking changes, which justify the minor bump:
+
+- The minimum supported Rust version is 1.97.1 (was 1.92).
+- `cef` moves from 151 to 154.5.0, with the `sandbox` feature enabled.
+- `ScriptResult` is removed; script completions now arrive as
+  `CefSurfaceEvent::ScriptCompleted` events (the new non-exhaustive
+  `CefSurfaceEvent`) carrying the caller's request ID (`WebRequestId`).
+
+Additions: an enforcing `CefSandboxMode` variant for Linux, macOS and Windows
+(Windows uses CEF's `bootstrap.exe` plus `CefWindowsSandboxContext`; the
+Windows import was qualified on CEF 154), `CefRuntime::try_run_subprocess`
+and `WeldError::SandboxSetup` for surfacing sandbox setup failures, owned
+native frames from every CEF producer, and neutral native frame pixel metadata
+(`NativeFramePixelFormat`). `CefSandboxMode::UnsandboxedTrustedContent` keeps
+the previous behaviour.
+
+## State at 0.14.1, 2026-09-04
+
+Version 0.14.1 was the previous published release. It refuses CEF 151's unsafe
 native DevTools window on every platform while preserving the supported CDP
 path. Version 0.14.0 made retained Metal frames move-only, and each platform
 demo has an embedded dodger-blue pixel fixture that exits unsuccessfully on a
