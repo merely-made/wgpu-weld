@@ -66,7 +66,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Serialize host hardware use
         uses: ./.host-hardware-lock/.github/actions/host-hardware-lock
-      - uses: dtolnay/rust-toolchain@1.99.0
+      - uses: dtolnay/rust-toolchain@1.99.1
 
       - name: Assert the native Wayland session
         run: |
@@ -118,8 +118,8 @@ jobs:
       - name: Assert the provisioned Rust toolchain
         shell: powershell
         run: |
-          rustc +1.99.0 --version
-          cargo +1.99.0 --version
+          rustc +1.99.1 --version
+          cargo +1.99.1 --version
 
       - name: Record the physical adapter
         shell: powershell
@@ -132,7 +132,7 @@ jobs:
           $env:WELD_PROFILE = Join-Path $env:WELD_CACHE_ROOT 'profile'
           New-Item -ItemType Directory -Path $env:WELD_CACHE_ROOT -Force | Out-Null
           $env:CEF_PATH = $env:CEF_CACHE_ROOT
-          cargo +1.99.0 build --locked -p demo-weld-win
+          cargo +1.99.1 build --locked -p demo-weld-win
           $archive = Get-ChildItem -LiteralPath $env:CEF_CACHE_ROOT -Recurse -File -Filter 'archive.json' |
             Where-Object { $_.Directory.Name -eq 'cef_windows_x86_64' } |
             Sort-Object LastWriteTime -Descending |
@@ -140,7 +140,7 @@ jobs:
           if (-not $archive) { throw 'CEF distribution was not produced by cef-dll-sys' }
           $env:CEF_PATH = $archive.Directory.FullName
           $bundle = Join-Path $env:RUNNER_TEMP 'weld-win-sandbox'
-          cargo +1.99.0 run --locked -p demo-weld-win --bin bundle-demo-weld-win -- $bundle
+          cargo +1.99.1 run --locked -p demo-weld-win --bin bundle-demo-weld-win -- $bundle
           $env:CEF_PATH = $bundle
           $stdout = Join-Path $env:RUNNER_TEMP 'weld-nvidia-dx12.stdout.log'
           $stderr = Join-Path $env:RUNNER_TEMP 'weld-nvidia-dx12.stderr.log'
@@ -177,7 +177,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Serialize host hardware use
         uses: ./.host-hardware-lock/.github/actions/host-hardware-lock
-      - uses: dtolnay/rust-toolchain@1.99.0
+      - uses: dtolnay/rust-toolchain@1.99.1
       - name: Ensure CEF native build tools
         run: |
           brew_bin="$(command -v brew || true)"
@@ -231,7 +231,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Serialize host hardware use
         uses: ./.host-hardware-lock/.github/actions/host-hardware-lock
-      - uses: dtolnay/rust-toolchain@1.99.0
+      - uses: dtolnay/rust-toolchain@1.99.1
       - name: Ensure CEF native build tools
         run: |
           brew_bin="$(command -v brew || true)"
