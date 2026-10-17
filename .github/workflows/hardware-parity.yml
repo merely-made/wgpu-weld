@@ -61,7 +61,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Serialize host hardware use
         uses: ./.host-hardware-lock/.github/actions/host-hardware-lock
-      - uses: dtolnay/rust-toolchain@1.99.0
+      - uses: dtolnay/rust-toolchain@1.99.1
       - name: Run the capability battery
         run: |
           set -o pipefail
@@ -105,7 +105,7 @@ jobs:
         shell: pwsh
         run: |
           $env:CEF_PATH = $env:CEF_CACHE_ROOT
-          cargo +1.99.0 build --locked -p demo-weld-win
+          cargo +1.99.1 build --locked -p demo-weld-win
           $archive = Get-ChildItem -LiteralPath $env:CEF_CACHE_ROOT -Recurse -File -Filter archive.json |
             Where-Object { $_.Directory.Name -eq 'cef_windows_x86_64' } |
             Sort-Object LastWriteTime -Descending |
@@ -113,7 +113,7 @@ jobs:
           if (-not $archive) { throw 'CEF distribution was not produced by cef-dll-sys' }
           $env:CEF_PATH = $archive.Directory.FullName
           $bundle = Join-Path $env:RUNNER_TEMP 'weld-win-sandbox'
-          cargo +1.99.0 run --locked -p demo-weld-win --bin bundle-demo-weld-win -- $bundle
+          cargo +1.99.1 run --locked -p demo-weld-win --bin bundle-demo-weld-win -- $bundle
           "CEF_PATH=$bundle" | Out-File -FilePath $env:GITHUB_ENV -Append
           "WELD_WIN_BUNDLE=$bundle" | Out-File -FilePath $env:GITHUB_ENV -Append
       - name: Run the capability battery
@@ -159,7 +159,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Serialize host hardware use
         uses: ./.host-hardware-lock/.github/actions/host-hardware-lock
-      - uses: dtolnay/rust-toolchain@1.99.0
+      - uses: dtolnay/rust-toolchain@1.99.1
       - name: Ensure CEF native build tools
         run: |
           brew_bin="$(command -v brew || true)"
@@ -206,7 +206,7 @@ jobs:
           sparse-checkout-cone-mode: false
       - name: Serialize host hardware use
         uses: ./.host-hardware-lock/.github/actions/host-hardware-lock
-      - uses: dtolnay/rust-toolchain@1.99.0
+      - uses: dtolnay/rust-toolchain@1.99.1
       - name: Ensure CEF native build tools
         run: |
           brew_bin="$(command -v brew || true)"
