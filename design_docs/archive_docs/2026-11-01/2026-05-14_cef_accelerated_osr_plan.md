@@ -1,7 +1,19 @@
 # wgpu-weld: CEF accelerated OSR → wgpu
 
+**Superseded (2026-11-01):** cut into `../../2026-11-01_producer_gates_plan.md`,
+which carries every open and deferred item below (the Phase 4 deferred list and
+macOS input parity) with its done-condition; this plan is archived whole, with
+the 2026-08-10 producer parity plan beside it. Commit hashes cited below predate
+the history rewrite and may not be ancestors of current `main`; `d671c96` and
+the Graft commits belong to another repository and were not rechecked.
+Corrections made when archiving are marked "Archive note". Mentions of CEF 148
+and `cef = "148"` are historical: main builds against CEF 154
+(`154.5.0+154.0.34`).
+
 **Date:** 2026-05-14 (revised 2026-06-02: Windows pooled-resource lifetime correction; revised 2026-08-10: module split and macOS validation; revised 2026-08-31: all native wgpu wrappers consolidated in Graft; revised 2026-09-04: owned Graft frame handoff)
-**Status:** **All four phases complete.** Windows (Phase 1 + 2), macOS (Phase 3) and Linux (Phase 4) each render example.com into a host wgpu texture through accelerated OSR, verified on real hardware rather than by cross-compilation. Welding now owns producer policy and delegates D3D12, Metal, and Vulkan resource registration to exact Graft commit `d671c9681332751f8ea24dd974511b81fe6a05dd`, using Graft's owned frame API for handle/fd custody after handoff. Remaining work is the deferred list under Phase 4 (Wayland-native, NVIDIA proprietary, non-RGBA/disjoint multi-plane formats) plus macOS input parity.
+**Status:** **All four phases complete.** Windows (Phase 1 + 2), macOS (Phase 3) and Linux (Phase 4) each render example.com into a host wgpu texture through accelerated OSR, verified on real hardware rather than by cross-compilation. Welding now owns producer policy and delegates D3D12, Metal, and Vulkan resource registration to Graft, using Graft's owned frame API for handle/fd custody after handoff. Remaining work is the deferred list under Phase 4 (Wayland-native, NVIDIA proprietary, non-RGBA/disjoint multi-plane formats) plus macOS input parity.
+
+**Archive note (2026-11-01):** the exact Graft commit `d671c9681332751f8ea24dd974511b81fe6a05dd` named here in 2026-09 was superseded the same month by published `grafting` 0.6.0 (`welding/Cargo.toml` declares `grafting = { version = "0.6.0", default-features = false }`, a caret requirement; `Cargo.lock` holds 0.6.0). `welding` 0.15.0 was published 2026-10-17 on CEF 154. The Wayland-native item is carried as open until a local-script pixel receipt passes (Mark, 2026-11-01).
 **Sibling crates:** `wgpu-graft` (Servo / GL-FBO interop), `wgpu-scry` (system webviews / WGC / ScreenCaptureKit)
 
 ---
@@ -33,7 +45,9 @@ framework initialisation (winit, wgpu, thread pools). If subprocesses run host
 initialisation code, the results are undefined.
 
 **Consequence for `welding`:**  
-`CefRuntime::execute_process_from(path)` is a static method that loads
+`CefRuntime::execute_process_from(path, sandbox)` (Archive note 2026-11-01: it
+took only `path` when this was written; it now takes the explicit
+`CefSandboxMode` too, `welding/src/runtime.rs:248`) is a static method that loads
 `libcef` temporarily, calls `execute_process`, and returns
 `Ok(Some(exit_code))` for subprocesses before any `CefRuntime` is constructed.
 The demo's `main()` calls this as line one.
@@ -118,6 +132,16 @@ the `impl cef::RenderHandler` + `on_accelerated_paint` pattern.
 Every file is held under a 600-line ceiling, which is what drove the
 2026-08-10 split of `native_frame` and the three producers.
 
+**Archive note 2026-11-01: the ceiling no longer holds, and this map is the
+2026-08-10 snapshot.** Line counts on `main`: `surface.rs` 1653,
+`windows_cef/mod.rs` 1232, `macos_cef/mod.rs` 1182, `linux_cef/mod.rs` 1115,
+`windows_cef/cef_backed.rs` 1056, `linux_cef/cef_backed.rs` 1023,
+`macos_cef/cef_backed.rs` 1012, `native_frame/mod.rs` 771; only
+`native_frame/vulkan_dmabuf.rs` (523) is under it. Modules added since:
+`app.rs`, `auth.rs`, `cookies.rs`, `cursor.rs`, `devtools.rs`, `downloads.rs`,
+`drag.rs`, `ime.rs`, `permissions.rs`, `popup.rs`, `profile.rs`, `snapshot.rs`,
+`view.rs`, `wgpu_compat.rs`. The fact is recorded; no re-split was done.
+
 | Path | Content |
 |------|---------|
 | `welding/src/lib.rs` | Flat re-exports; `PlatformCefProducer` / `PlatformCefConfig` aliases |
@@ -159,8 +183,11 @@ Every file is held under a 600-line ceiling, which is what drove the
 - [x] `resize` → `was_resized()` (done in Phase 1; left here for cross-reference)
 - [x] Navigation methods (done in Phase 1; left here for cross-reference)
 - [x] `execute_script` via `cef_frame_t::execute_java_script`
-- [x] `poll_navigation_event` from `cef_load_handler_t` / `WeldLoadHandler` + `WeldDisplayHandler` callbacks
+- [x] `poll_navigation_event` (now `poll_web_event`, see below) from `cef_load_handler_t` / `WeldLoadHandler` + `WeldDisplayHandler` callbacks
 - [x] `post_web_message` / `poll_web_message` via JS `dispatchEvent` + `cef_process_message_t`
+      (Archive note 2026-11-01: `poll_navigation_event` and `poll_web_message`
+      were replaced in the breaking 0.15 line by the single ordered
+      `poll_web_event` stream, `surface.rs:1106`; `post_web_message` remains.)
 
 ### Phase 3 — macOS
 
@@ -279,6 +306,11 @@ CEF 127.3.5 + Vulkan + X11 + GLFW + Intel):
 - [x] Smoke test on Fedora 44 + Intel iGPU: example.com rendered, mouse input round-trips through to navigation
 - [ ] Wayland-native (currently runs through XWayland), NVIDIA proprietary,
       non-RGBA and disjoint multi-plane formats (deferred)
+      (Archive note 2026-11-01: all carried to the new plan. Wayland-native is
+      open until a local-script pixel receipt passes (Mark's ruling); the
+      removed `radv-wayland` CI jobs' parity passes are historical, and
+      `demo-weld-linux/src/main.rs:19` still says Wayland is unsupported.
+      Disjoint buffers return Graft's `VulkanDisjointDmabufNotSupported`.)
 
 Additional fix discovered during Phase 4: `external_begin_frame_enabled` was
 set to 1 in all three producers but no caller invokes `SendExternalBeginFrame`,

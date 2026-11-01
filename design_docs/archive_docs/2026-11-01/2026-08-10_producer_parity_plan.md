@@ -1,17 +1,35 @@
 # Producer Parity Plan: welding / scrying / grafting
 
+**Superseded (2026-11-01):** cut into `../../2026-11-01_producer_gates_plan.md`,
+which carries every open, deferred and follow-on item with its done-condition;
+this plan is archived whole, with the 2026-05-14 CEF accelerated OSR plan
+beside it. Commit hashes cited below predate the history rewrite: these Weld
+hashes are no longer ancestors of `main`: `4784d07`, `2989de9`, `c65a44e`,
+`770b6bb`, `02fb1cc`, `1269462`; the `welding-v0.13.0` tag now peels to
+`2e59849`, cited here as `e865777`. Hashes of other repositories were not
+rechecked. Every GitHub Actions run link and run number below is historical:
+the workflows were removed 2026-10-28 (`a32955a`). Corrections made when
+archiving are marked "Archive note".
+
 **Date:** 2026-08-10
-**Status (2026-10-07):** Current CEF 154 migration has a passing locked Windows
-runtime/demo typed check, 60 library tests, and sandboxed native DX12 pixel
-smoke. CEF 154 Linux/Metal hardware and MSRV gates remain open.
-W1-W9 landed. Exact-HEAD parity run `37205146754`
-is green on all four hosts, including NVIDIA. Hardware run `37197779933`
-passes on both Macs and NVIDIA but fails RADV before the product test at a
-stale logind session-ID assertion. The bounded session-discovery repair is
-implemented locally; shell syntax and eight command-mocked cases pass, with a native
-rerun still open.
-Published versions and registry-only proof remain owned by the canonical
-triplet release plan below.
+**Status (2026-11-01):** W1-W10 landed, with W7b (auth) wired but never called
+by CEF. `welding` 0.15.0 was published 2026-10-17 on CEF 154
+(`154.5.0+154.0.34`). The Linux headed-preflight repair for the RADV
+session-ID failure is committed (`5327970`, 2026-10-05); its native RADV
+acceptance is still open. The GitHub workflows were removed 2026-10-28
+(`a32955a`), so the run links below are historical and the gates now live in
+local scripts and dated receipts. CEF 154 Linux/Metal hardware parity and an
+MSRV gate remain open. Published versions and registry-only proof are owned
+by `wgpu-graft/design_docs/2026-11-01_triplet_release_plan.md`.
+
+**Previous status (2026-10-07):** Current CEF 154 migration has a passing
+locked Windows runtime/demo typed check, 60 library tests, and sandboxed
+native DX12 pixel smoke. CEF 154 Linux/Metal hardware and MSRV gates remain
+open. W1-W9 landed. Exact-HEAD parity run `37205146754` is green on all four
+hosts, including NVIDIA. Hardware run `37197779933` passes on both Macs and
+NVIDIA but fails RADV before the product test at a stale logind session-ID
+assertion. The bounded session-discovery repair is implemented locally; shell
+syntax and eight command-mocked cases pass, with a native rerun still open.
 
 **Historical checkpoint (2026-09-04):** The 2026-08-30 snapshot-provenance follow-up is
 landed with focused local test and Windows consumer-check receipts. The
@@ -29,7 +47,9 @@ of the gap list, but it assigns work to all three siblings.
 **Release authority (2026-09-03):** This remains the capability-parity
 implementation record. Release hardening, package order, and publication gates
 now live once in
-`wgpu-graft/design_docs/2026-09-03_wgpu_triplet_release_plan.md`.
+`wgpu-graft/design_docs/2026-11-01_triplet_release_plan.md` (Archive note
+2026-11-01: that plan was cut from `2026-09-03_wgpu_triplet_release_plan.md`,
+which this line named before).
 
 ## Goal
 
@@ -47,7 +67,7 @@ identical traits. The measure is: a host-side adapter over any lane
 (the mere `SurfaceEngine` direction) should be mechanical to write.
 
 Authoritative per-backend detail for scrying stays in
-[wgpu-scry/docs/parity-matrix.md](../../wgpu-scry/docs/parity-matrix.md);
+`wgpu-scry/docs/parity-matrix.md` (cited by path, DOC_POLICY section 5);
 this doc does not duplicate its footnotes.
 
 ## Findings
@@ -86,44 +106,47 @@ wgpu-28/wgpu-29 support. Nobody else has the sync seam or the dual-wgpu trick.
 ### Cross-lane matrix
 
 Legend: Y implemented, P partial, N missing, o not applicable to the lane.
-welding column verified against source this session; scrying column summarizes
-its own matrix; grafting column covers the interop layer plus Servo-lane
-demos.
+Archive note 2026-11-01: the welding column was a 2026-08-10 pre-W snapshot. It
+is re-read below against the `CefSurfaceCapabilities::probe` in
+`welding/src/surface.rs` (line 216 on) and the `CefSurfaceProducer` trait
+(`surface.rs:714`); each updated cell names its evidence, and cells not
+confirmed there are left as written. The scrying and grafting columns are the
+2026-08-10 summary and were not re-verified.
 
 | Capability | welding (CEF) | scrying (best backend) | grafting |
 | --- | --- | --- | --- |
-| GPU frame import | Y (3 platforms hw-verified; Linux needs an explicit DMABUF modifier, see below) | Y | Y |
+| GPU frame import | Y (3 platforms hw-verified; Linux implicit modifier imported as LINEAR on wgpu 30 since `0b0dc5f`, wgpu 28/29 refuse with a typed error: `native_frame/vulkan_dmabuf.rs:134`) | Y | Y |
 | CPU fallback tier | P (feature-gated, never runtime-exercised) | Y | Y (readback demos) |
-| Explicit sync seam | N (implicit: callback copy + keyed mutex + cache-flush) | P (in-tree sync modules) | Y (owner) |
+| Explicit sync seam | N (implicit: callback copy + keyed mutex + cache-flush; open as G3) | P (in-tree sync modules) | Y (owner) |
 | HiDPI scale factor | Y (all three via `WELD_SCALE`; native 2x on the M4 iMac, 2026-08-12) | unverified, per-backend | o (host concern) |
-| Popup widget surfaces (select/autocomplete) | Y on Windows and on macOS 26/arm64 (2026-08-12); absent in the macOS 15.7/Intel test; Linux opens, import blocked (RADV modifier) | o (webviews self-composite) | o (Servo self-composites) |
+| Popup widget surfaces (select/autocomplete) | Y on Windows and on macOS 26/arm64 (2026-08-12); absent in the macOS 15.7/Intel test; Linux opens and reports geometry; the RADV modifier block was fixed by `0b0dc5f`, the popup import re-measure is open | o (webviews self-composite) | o (Servo self-composites) |
 | Navigation control | Y | Y | demo-level |
-| can_go_back / can_go_forward | N | Y | o |
+| can_go_back / can_go_forward | Y (`surface.rs:940`, `:944`; W8, verified on all three) | Y | o |
 | Navigation events | Y (all declared variants emit; NewWindowRequested proven via a switch) | Y (18 variants) | o |
 | Mouse / keyboard / wheel | Y (Windows and Linux both proven to the DOM; mac thinner) | Y (caveats per backend) | demo-level |
-| Pointer (pen) input | N | Y | N |
-| Touch input | N (CEF has SendTouchEvent) | unverified | N |
+| Pointer (pen) input | P (`ContactDevice::Pen` maps to CEF `PointerType::PEN` through `send_touch_input`, `drag.rs:76`; no receipt, and `welding/README.md:197` still says pen is unmodelled) | Y | N |
+| Touch input | Y (`send_touch_input`, probe `touch: Supported`; W8 receipts on all three) | unverified | N |
 | Cursor-shape reporting | Y (verified on Linux with a human pointer) | Y (all 5) | N |
-| IME | P (input + composition-range feedback wired; compile-only) | Y (GTK/WPE lanes; win/mac unverified) | N |
-| Drag / drop | N (CEF has StartDragging + DragTarget*) | mixed | N |
+| IME | Y (verified on all three 2026-08-12 after the null-range fix; input + composition-range feedback) | Y (GTK/WPE lanes; win/mac unverified) | N |
+| Drag / drop | Y (`send_drag_input`, `finish_drag_source`, `DragStarted`; probe `drag_drop: Supported`; W8 receipts on all three) | mixed | N |
 | Cookies get/set/delete | Y (request/poll; verified on Windows) | Y | o |
-| Cookie change events | N | Y (WKWebView) | o |
+| Cookie change events | N (probe: `Unsupported`, `surface.rs:287`) | Y (WKWebView) | o |
 | Script exec + result | Y (renderer round trip, JSON values) | Y | o |
-| Web message bridge | Y | Y | o |
-| Custom URL scheme handlers | N (CEF has scheme handler factory) | Y (all 5) | o |
-| Downloads (lifecycle + decisions) | N | Y (incl. pause/resume/cancel) | o |
-| Auth challenges | N (CEF has GetAuthCredentials) | Y (win/mac) | o |
-| Permission requests | N (CEF has CefPermissionHandler) | Y (win/mac) | o |
-| Context menus | N | Y (event + toggle) | o |
-| Find-in-page | N (CEF has Find) | Y (win/mac) | o |
-| PDF / print | N (CEF has PrintToPDF) | Y (win/mac) | o |
-| Snapshot to PNG | N (demo probe only) | Y | o |
-| Zoom / UA / settings | N | Y (apply_settings) | o |
+| Web message bridge | P (host to page by dispatched `MessageEvent`; the browser-side `weld.message` handler exists but a 2026-11-01 grep of `welding/src` found no renderer-side sender) | Y | o |
+| Custom URL scheme handlers | N (no scheme handler factory in `welding/src`; the probe has no field for it) | Y (all 5) | o |
+| Downloads (lifecycle + decisions) | Y (`download_dir` policy plus `cancel_download`/`pause_download`/`resume_download`; probe `Supported`; W7, all three) | Y (incl. pause/resume/cancel) | o |
+| Auth challenges | P (wired and answerable, CEF never calls it: probe `Partial`, `surface.rs:316`; proxy auth untested) | Y (win/mac) | o |
+| Permission requests | Y (`grant_permission`/`deny_permission`; probe `Supported`; W7c, all three) | Y (win/mac) | o |
+| Context menus | Y (`ContextMenuRequested` event; probe `Supported`; W7d, all three) | Y (event + toggle) | o |
+| Find-in-page | Y (`find`/`stop_finding`, `surface.rs:1037`; W8, all three) | Y (win/mac) | o |
+| PDF / print | P (`print_to_pdf` verified on all three; `print` native dialog verified to physical output on Windows, wired and unmeasured on macOS, unsupported by design on Linux: probe `surface.rs:342`) | Y (win/mac) | o |
+| Snapshot to PNG | Y (`request_snapshot_png`/`poll_snapshot_png`; probe `Supported`; W8, all three) | Y | o |
+| Zoom / UA / settings | Y (`zoom`, `set_zoom_level`, `zoom_level`; user agent on `CefRuntimeConfig`; W8, all three) | Y (apply_settings) | o |
 | Visibility (WasHidden / set_visible) | Y (set_visible on all three) | Y | o |
-| Per-producer profile isolation | P (global root_cache_path only; CEF has RequestContext) | Y (per-producer data_dir) | o |
+| Per-producer profile isolation | Y (one CEF `RequestContext` per producer; probe `profile_isolation: Supported`; W8, all three) | Y (per-producer data_dir) | o |
 | Render-process crash recovery | Y (status-carrying event + `request_repaint`; frames resume after a deliberate crash on Windows and macOS, not delivered at all on Linux — 2026-08-12) | P | o |
 | DevTools window | N (CEF 151 crashes accelerated windowless browsers; all producers refuse it) | Y | o |
-| DevTools protocol (CDP) | N (CEF has ExecuteDevToolsMethod; unique leverage) | N (WebView2 could; not exposed) | o |
+| DevTools protocol (CDP) | Y (`send_devtools_message`/`poll_devtools_message`, opt-in; W9, all three) | N (WebView2 could; not exposed) | o |
 | Multi-producer per process | Y | Y (except WPE) | Y |
 | Honest capability probe | Y (`devtools` corrected again for the CEF 151 regression in 0.14.1) | Y (matrix + footnotes) | o |
 
@@ -182,6 +205,15 @@ This also opens the page-to-host direction: a render-process handler is what a
 real bridge needs, and the `weld.message` path can now be finished properly.
 
 ### Linux + implicit-modifier DMABUF is blocked upstream in wgpu
+
+**Landed 2026-08-16 (`0b0dc5f`), on wgpu 30.** The block below was true of
+wgpu 28 and 29 and stopped being true in 30, which enables
+`VK_EXT_image_drm_format_modifier` when the adapter supports it and surfaces it
+as `Features::VULKAN_EXTERNAL_MEMORY_DMA_BUF`. `native_frame/vulkan_dmabuf.rs:134`
+now imports `DRM_FORMAT_MOD_INVALID` as `DRM_FORMAT_MOD_LINEAR` when the host
+device carries that feature, and keeps the typed refusal on rows 28 and 29.
+The 2026-08-30 entry records RADV frames imported (16384/16384 sampled bytes).
+The text below is the 2026-08-10 measurement, kept as the record.
 
 Tried on the Fedora ThinkPad (AMD Renoir / RADV, 2026-08-10), not reasoned
 about. CEF supplies `DRM_FORMAT_MOD_INVALID` there; Intel/Mesa supplies a real
@@ -396,7 +428,8 @@ left in the tree on a hunch:
   was unproven and would have left a Windows-only field on one of three
   producers -- but it is still worth doing properly across all three for dialog
   and context-menu parenting and monitor info, which is a separate job with its
-  own evidence.
+  own evidence. (Archive note 2026-11-01: still open, and carried; a grep of
+  `welding/src` finds no `parent_window` plumbing.)
 
 **The comparison, 2026-08-12 (late).** `cefclient` turned out to be the wrong
 instrument and an expensive one: the `cef-dll-sys` distribution is the
@@ -495,7 +528,11 @@ alone, finish-composing).
 The lesson generalises beyond IME: **any CEF C API parameter that the C++ API
 takes by reference must be non-null**, and passing null buys a silent no-op
 rather than an error. Worth auditing the other `Option<&T>` arguments
-`welding` passes.
+`welding` passes. (Archive note 2026-11-01: only DevTools was fixed afterwards,
+`106da02` and `42df5de`; the rest of the audit is open and carried. Unaudited
+sites include `Option` arguments passed as `None` at
+`linux_cef/mod.rs:564` (IME underlines) and `:899` (DevTools method
+parameters), repeated on the other two producers.)
 
 One incident from the verification run, fixed rather than just noted: on a GPU
 that cannot import CEF's DMABUF, the Linux demo logged an error on *every*
@@ -555,6 +592,10 @@ above: they were taken on 29. Re-taken on all three paths at `770b6bb`.
 | DX12 shared texture -> wgpu | Windows 11 | **1578 frames imported**, `1280x800 Bgra8Unorm`, `LoadEnd` control passing |
 | IOSurface -> MTLTexture -> wgpu | M4 iMac, macOS 26.5.1, arm64 | `VALIDATION PASS`, probe **16384/16384 non-zero** (recorded in `770b6bb`) |
 | DMA-BUF -> Vulkan external memory | ThinkPad, AMD Renoir/RADV | **0 imported, by design**: `DRM_FORMAT_MOD_INVALID` refused with the typed error, `LoadEnd` control passing |
+
+(Archive note 2026-11-01: the Linux row is superseded. From `0b0dc5f`
+(2026-08-16) wgpu 30 imports the implicit modifier as LINEAR; see the
+2026-08-30 entry for RADV imports.)
 
 So `wgpu-30` is now hardware-verified on every path, and the caveat published
 in 0.10.0's README — that the demos could not exercise 28 or 30 end to end —
@@ -687,6 +728,8 @@ a wgpu major without asking. The README now says so and gives the pin.
   the negative.
 
   IME is compile-only: exercising it needs a real input method.
+  (Archive note 2026-11-01: superseded. IME was exercised and fixed on all
+  three platforms 2026-08-12, late; see "It was the call site after all".)
 
   Also fixed in passing: `demo-weld-win` never initialised a logger, so every
   `log::` line welding emitted was invisible. That is why the first three
@@ -707,7 +750,7 @@ a wgpu major without asking. The README now says so and gives the pin.
   above. Script results, Chromium command-line switches, and W1's
   `NewWindowRequested` residual, all of which were waiting on the same missing
   render-process handler.
-- **W7, host-decision surfaces. IN PROGRESS.** Downloads **done 2026-08-13**,
+- **W7, host-decision surfaces. DONE 2026-08-13 except W7b (auth).** Downloads **done 2026-08-13**,
   verified on all three (Windows, M4, ThinkPad): the same 28-byte probe file
   lands on disk with the right bytes, and with no `download_dir` configured
   zero download events fire at all.
@@ -916,6 +959,11 @@ a wgpu major without asking. The README now says so and gives the pin.
 ### S: scrying items (both directions)
 
 - **S1. Done 2026-08-31.** Pin the reviewed Graft interop ABI exactly.
+  (Archive note 2026-11-01: Weld now depends on published `grafting` `0.6.0`
+  as a caret requirement, `welding/Cargo.toml`; the comment above it still
+  says "Pin the reviewed interop ABI exactly". The Graft 0.7 / Scry 0.8 /
+  Weld 0.15.1 train in `wgpu-graft/design_docs/2026-11-01_triplet_release_plan.md`
+  covers it.)
 - **S2.** Its own matrix's unverified cells, in its order: win/mac IME
   observability, touch coverage, wk6 native input. Tracked in scry's docs;
   listed here only so the family view is complete.
@@ -929,7 +977,8 @@ a wgpu major without asking. The README now says so and gives the pin.
   `RESOURCE` state; older rows return a typed refusal.
 - **G2.** `servo-wgpu-interop-adapter` selects grafting features without a
   wgpu major of its own default; it compiles today because a sibling demo
-  unifies one in. Make the selection explicit.
+  unifies one in. Make the selection explicit. (Archive note 2026-11-01:
+  the adapter is now `grafting-servo`; owned by wgpu-graft.)
 - **G3.** Offer the sync seam to welding: either welding adopts a
   `Dx12FenceSynchronizer` path or documents why the callback-time copy makes
   implicit sync correct for CEF. Investigation, not a commitment.
@@ -1045,6 +1094,11 @@ pattern from demo-weld-mac generalizes). G1 whenever, it gates nothing local.
   M4, and Intel parity jobs now select sandboxed mode so a green run proves
   page load, imported frames, and browser controls inside that process model.
   Windows bootstrap/client-DLL support remains a separate required slice.
+  (Archive note 2026-11-01: landed as `61c3c05`, "Wire the Windows CEF sandbox
+  bootstrap": `CefWindowsSandboxContext` in `welding/src/runtime.rs:158`,
+  re-exported at `lib.rs:128`, and `demo-weld-win/src/bundle.rs`. The
+  2026-10-07 CEF 154 qualification entry records the sandboxed bootstrap plus
+  client-DLL pixel runs.)
 
 - 2026-08-31: **the triplet now has one native import boundary.** Graft commit
   `8106f7c6b16838eb9ec062f0293249b39c108907` owns the D3D12, Metal, and
@@ -1152,7 +1206,9 @@ pattern from demo-weld-mac generalizes). G1 whenever, it gates nothing local.
   previously unprovable without a human at the keyboard, which covers both
   `<select>` dropdowns and W1's `NewWindowRequested`. Retrying that W1 residual
   through a gesture-driven `window.open` is now cheap and should ride along
-  with the next Windows run.
+  with the next Windows run. (Archive note 2026-11-01: closed by W6 the same
+  day, proven through the `disable-popup-blocking` switch instead of a gesture
+  retry; no gesture retry is owed.)
 
   **Linux ran for the first time (2026-08-10), on the Fedora 44 ThinkPad
   (AMD Renoir / RADV).** CEF initializes, example.com loads, and the Vulkan
@@ -1169,6 +1225,8 @@ pattern from demo-weld-mac generalizes). G1 whenever, it gates nothing local.
   fix is a linear-tiling import path carrying the plane stride, which needs a
   machine where the resulting pixels can be checked, so it is a follow-up
   rather than a guess. Until then, Linux + AMD is a documented no-import.
+  (Archive note 2026-11-01: landed as `0b0dc5f`, 2026-08-16, on wgpu 30; see
+  the heading note on the implicit-modifier section.)
 
   Two method notes from that session. Reaching the ThinkPad's display over SSH
   needs `DISPLAY=:0` **plus** `XAUTHORITY=/run/user/1000/.mutter-Xwaylandauth.*`
@@ -1228,7 +1286,11 @@ pattern from demo-weld-mac generalizes). G1 whenever, it gates nothing local.
      should be re-read with this in mind. Follow-ups: expose
      `background_color` in `CefSurfaceConfig` (configurability doctrine),
      and document that pages without a background import with premultiplied
-     transparency today. A side benefit of the 12s-hold control: a held
+     transparency today. (Archive note 2026-11-01: both landed in welding 0.5.0,
+     see the "`background_color` landed" entry below; the ARGB mapping is pinned
+     by `background_color_maps_to_cef_argb` at `surface.rs:484` and the
+     premultiplied-transparency behaviour is documented on the field,
+     `surface.rs:602`.) A side benefit of the 12s-hold control: a held
      IOSurface frame does not rot — CEF does not recycle it under the host.
 
   **W1's last unproven variant is proven: `ContentProcessTerminated` emits.**
@@ -1265,7 +1327,10 @@ pattern from demo-weld-mac generalizes). G1 whenever, it gates nothing local.
   crash-test runs also navigated themselves to iana.org within seconds of
   launch — a click on the freshly-focused window sitting under a live
   pointer is the suspected cause (a human was at the machine both times);
-  noted, not chased.
+  noted, not chased. (Archive note 2026-11-01: the drift is resolved.
+  `WELD_TIMEOUT_SECS` is now read by all three demos:
+  `demo-weld-win/src/main.rs:957`, `demo-weld-linux/src/main.rs:976` and
+  `demo-weld-mac/src/main.rs:835`.)
 
 - 2026-08-12, later still: **the Intel iMac retest, over SSH.** With the
   key authorized the whole loop ran remotely — wake the machine by pinging
@@ -1315,7 +1380,9 @@ pattern from demo-weld-mac generalizes). G1 whenever, it gates nothing local.
   IOSurface and wraps it zero-copy into an `MTLTexture`
   (`native_frame/metal.rs`). No misbehaviour observed from the aliasing
   (see the 12s hold above), but the claim should match the code, and G3's
-  sync question now has a second concrete instance.
+  sync question now has a second concrete instance. (Archive note 2026-11-01:
+  corrected; `README.md:198-200` now says a pixel copy on Windows and a
+  `CFRetain`ed IOSurface wrapped zero-copy on macOS.)
 
 - 2026-08-12, later: **`background_color` landed (welding 0.5.0).**
   `CefSurfaceConfig::transparent` turned out to be declared, documented,

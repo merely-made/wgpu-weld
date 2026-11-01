@@ -169,7 +169,9 @@ call before any CEF code runs.
   distribution; producer constructors return a pending-wiring error, and the
   capability probe reports the CEF-backed browser features as unsupported.
 
-Current plan (`design_docs/`, 2026-08-10 parity plan): W1 through W6 have
+Plan (open work in `design_docs/2026-11-01_producer_gates_plan.md`; the
+2026-08-10 parity plan is archived under `design_docs/archive_docs/2026-11-01/`):
+W1 through W6 have
 landed. W7 is done bar one row: downloads, permission requests, and context
 menus are verified on all three platforms; `GetAuthCredentials` is wired and
 answerable but CEF has never been observed to call it. W8's code is complete:
