@@ -28,8 +28,8 @@ partial or missing.
 Not here:
 - Turnstone consumer qualification of CEF 154 and Weld (coordinated consumer
   repin and host gates): owned in Turnstone,
-  `turnstone/design_docs/2026-08-25_browser_surface_implementation_plan.md` and
-  `turnstone/design_docs/2026-08-03_user_agent_taxonomy_plan.md`;
+  `turnstone/design_docs/2026-11-02_browser_surface_implementation_plan.md` and
+  `turnstone/design_docs/2026-11-02_user_agent_taxonomy_plan.md`;
 - published versions, package order, the Graft 0.7 / Scry 0.8 / Weld 0.15.1
   train (which also resolves `welding`'s `grafting` requirement, see Findings)
   and the registry-only four-host proof:
