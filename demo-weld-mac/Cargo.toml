@@ -39,3 +39,6 @@ env_logger = "0.11"
 cef = { workspace = true, features = ["accelerated_osr"] }
 # For the bundler's BundleInfo version field.
 semver = "1"
+
+[lints]
+workspace = true

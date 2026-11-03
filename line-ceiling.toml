@@ -1,0 +1,50 @@
+# mere/design_docs/mere_docs/implementation_strategy/2026-10-30_house_style_plan.md (H2); all physical source lines count.
+ceiling = 600
+
+[[exception]]
+path = "demo-weld-linux/src/main.rs"
+reason = "Linux demo: CEF accelerated OSR → wgpu surface via welding (DMABUF → Vulkan). Existing source-size debt; a responsibility split must preserve DemoApp, DemoState and existing module visibility."
+
+[[exception]]
+path = "demo-weld-mac/src/main.rs"
+reason = "macOS demo: CEF accelerated OSR → wgpu surface via welding (IOSurface → MTLTexture → wgpu Metal). Existing source-size debt; a responsibility split must preserve DemoApp, PendingState, DemoState and existing module visibility."
+
+[[exception]]
+path = "demo-weld-win/src/main.rs"
+reason = "Windows demo: CEF accelerated OSR → wgpu surface via welding. Existing source-size debt; a responsibility split must preserve DemoApp, DemoState and existing module visibility."
+
+[[exception]]
+path = "welding/src/linux_cef/cef_backed.rs"
+reason = "CEF handler vtables for the Linux producer: render handler (accelerated OSR paint), life-span, client, load, and display handlers. Existing source-size debt; a responsibility split must preserve existing entry points, fixture identity and module visibility."
+
+[[exception]]
+path = "welding/src/linux_cef/mod.rs"
+reason = "Linux CEF producer: accelerated OSR via native pixmap / DMABUF planes and Vulkan external memory. Existing source-size debt; a responsibility split must preserve LinuxCefConfig, WeldRenderHandlerInner, LinuxCefProducer and existing module visibility."
+
+[[exception]]
+path = "welding/src/macos_cef/cef_backed.rs"
+reason = "CEF handler vtables for the macOS producer: render handler (accelerated OSR paint), life-span, client, load, and display handlers. Existing source-size debt; a responsibility split must preserve existing entry points, fixture identity and module visibility."
+
+[[exception]]
+path = "welding/src/macos_cef/mod.rs"
+reason = "macOS CEF producer: accelerated OSR via OnAcceleratedPaint / IOSurfaceRef. Existing source-size debt; a responsibility split must preserve MacosCefConfig, WeldRenderHandlerInner, MacosCefProducer and existing module visibility."
+
+[[exception]]
+path = "welding/src/native_frame/mod.rs"
+reason = "Native GPU surface handles produced by CEF's OnAcceleratedPaint callback, plus the wgpu import infrastructure. Existing source-size debt; a responsibility split must preserve InteropBackend, NativeFrame, NativeFrameKind and existing module visibility."
+
+[[exception]]
+path = "welding/src/runtime.rs"
+reason = "Runtime. Existing source-size debt; a responsibility split must preserve CefRuntimeConfig, CefSandboxMode, CefLogSeverity and existing module visibility."
+
+[[exception]]
+path = "welding/src/surface.rs"
+reason = "Surface. Existing source-size debt; a responsibility split must preserve SnapshotRequestId, SnapshotPngCompletion, WebRequestId and existing module visibility."
+
+[[exception]]
+path = "welding/src/windows_cef/cef_backed.rs"
+reason = "CEF handler vtables for the Windows producer: render handler (accelerated OSR paint), life-span, client, load, and display handlers. Existing source-size debt; a responsibility split must preserve existing entry points, fixture identity and module visibility."
+
+[[exception]]
+path = "welding/src/windows_cef/mod.rs"
+reason = "Windows CEF producer: accelerated OSR via OnAcceleratedPaint. Existing source-size debt; a responsibility split must preserve WindowsCefConfig, WeldRenderHandlerInner, WeldLifeSpanState and existing module visibility."

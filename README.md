@@ -236,3 +236,10 @@ cd demo-weld-mac && cargo run --bin bundle-demo-weld-mac && open ../target/bundl
 ## License
 
 MPL-2.0 ([LICENSE](LICENSE)).
+
+## Local checks
+
+Enable the commit checks with `prek install --allow-missing-config`; run
+`prek run --all-files` alongside the existing local gates. Check definitions
+live in `.pre-commit-config.yaml`, with source-size exclusions and exceptions
+in `line-ceiling.toml`. Shared house style and rollout: `mere/design_docs/mere_docs/implementation_strategy/2026-10-30_house_style_plan.md`.
