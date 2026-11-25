@@ -47,16 +47,16 @@ mismatches fail the process. Per-platform detail, and the difference between
 "verified on that hardware" and "implemented but not yet run there", is in
 [`welding/README.md`](welding/README.md).
 
-Main now targets CEF 154 (`cef` and `cef-dll-sys`
-`154.5.0+154.0.34`, Chromium `154.0.8037.98`), as recorded by the
-[CEF registry](https://crates.io/api/v1/crates/cef/154.5.0%2B154.0.34),
-[sys registry](https://crates.io/api/v1/crates/cef-dll-sys/154.5.0%2B154.0.34),
-and [official SDK index](https://cef-builds.spotifycdn.com/index.json). Its migration receipts
-live in `docs/receipts/cef154_windows_20261007/`; older CEF 151 hardware
-receipts below retain their original scope. The native DevTools-window
-refusal and sandbox policy remain unchanged. The locked Windows check, 60
-library tests, and sandboxed DX12 pixel smoke pass; fresh CEF 154 Linux/Metal
-runtime parity and MSRV gates remain open.
+Main's lockfile resolves CEF 156 (`cef` and `cef-dll-sys`
+`156.7.0+156.0.31`) since 2026-11-25. The requirement is the lower bound
+`>=154.5.0`: `welding` builds from the same source against both (checked on
+macOS), and a consumer's own lockfile chooses. On 156 the library check, its tests, the Metal pixel fixture
+and the parity battery have run on one Intel Mac (macOS 15.8); Windows, Linux
+and Apple Silicon have not been built or run on 156. The published 0.15.0 was
+qualified on CEF 154 (`154.5.0+154.0.34`, Chromium `154.0.8037.98`) on Windows,
+with receipts in `docs/receipts/cef154_windows_20261007/`; older CEF 151
+hardware receipts below retain their original scope. The native
+DevTools-window refusal and sandbox policy remain unchanged.
 
 Main is preparing the breaking 0.15.0 line. Its first change makes owned native
 frame delivery a required cross-platform producer operation so neutral hosts
@@ -201,7 +201,8 @@ govern every consumer (details in [`welding/README.md`](welding/README.md)):
    the callback, using a pixel copy on Windows and a `CFRetain`ed IOSurface
    wrapped zero-copy on macOS, and exposes only owned resources.
 4. CEF is not a system library: ship libcef with the app and point
-   `CEF_PATH` at a CEF 151 binary distribution, matching the `cef` crate.
+   `CEF_PATH` at the CEF binary distribution that matches the resolved `cef`
+   crate.
 
 The library defaults to wgpu 30 and also carries `wgpu-29` and `wgpu-28`.
 Select 29 or 28 with default features disabled; combine `cef-runtime` with

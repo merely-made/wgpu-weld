@@ -372,6 +372,16 @@ Each lands with its probe field and pin test.
   `a32955a`, `106da02`, `42df5de`. `welding-v0.15.0` peels to `5e7ce9f`.
 - 2026-11-01: the archived plans' CEF 147/148/151 hardware tables are
   historical; only Windows has CEF 154 runtime receipts.
+- 2026-11-25: main's lockfile moved to CEF 156 (`cef` `156.7.0+156.0.31`) under
+  a `>=154.5.0` requirement; `welding` needed no source change. On the Intel
+  Mac (macOS 15.8.3, Metal) the pixel fixture passed and the parity battery
+  gave 14 PASS, 1 SKIP (`popup`) and 3 FAIL (`zoom`, `touch`, `visibility`).
+  Each failing case had logged its own receipt and then outlived the
+  launcher's window at exit; `touch` printed Chromium's "Teardown watchdog
+  expired". All three passed when rerun alone. Whether CEF 154 exits the same
+  way on this host was not measured, so this is not established as a 156
+  regression. Windows, Linux and Apple Silicon were not built or run on 156,
+  so P2's hosts are now a release further behind main.
 
 ## Progress
 

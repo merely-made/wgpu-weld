@@ -37,7 +37,9 @@ Version 0.15.0 targets CEF 154 (`154.5.0+154.0.34`, Chromium
 runtime; CEF 151 binaries are not supported. The migration was qualified on
 Windows (receipts under `../docs/receipts/cef154_windows_20261007/`). The
 historical tables below continue to describe CEF 151, with fresh Mac and Linux
-runtime gates still open.
+runtime gates still open. Main's lockfile has since moved to CEF 156
+(`156.7.0+156.0.31`) under a `>=154.5.0` requirement; see the repository README
+for what has run there.
 
 ## 0.15.0 (2026-10-17)
 
